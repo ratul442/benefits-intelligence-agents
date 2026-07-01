@@ -1,4 +1,4 @@
-"""Transform the flat catalog into the hardened production catalog format.
+"""Transform the flat catalog into the hardened catalog format.
 
 Adds: catalog metadata, value_type, alignment.basis/positive_option,
 dependencies, market_mapping, output_rules.
@@ -216,7 +216,7 @@ def clean_company_prompt(prompt: str) -> str:
 
 
 def transform_catalog(items: list[dict]) -> dict:
-    """Transform flat catalog array into hardened production format."""
+    """Transform flat catalog array into hardened catalog format."""
     transformed_items = []
     
     for item in items:
