@@ -1,0 +1,15 @@
+# Core - Foundry Hosted Agent (per official foundry-samples)
+agent-framework
+agent-framework-foundry-hosting
+azure-ai-projects
+azure-identity
+openai
+pydantic
+pydantic-settings
+
+# GenAI span instrumentation (emits spans for agent-framework-foundry-hosting exporter)
+opentelemetry-instrumentation-openai-v2
+
+# Utilities
+python-dotenv
+aiohttp

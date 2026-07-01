@@ -1,0 +1,12 @@
+# Core — Agent Framework with Foundry support (Responses protocol)
+agent-framework[foundry]>=1.2.2
+agent-framework-foundry-hosting
+
+# Identity
+azure-identity
+
+# HTTP client for Toolbox MCP connection
+httpx
+
+# Env loading
+python-dotenv

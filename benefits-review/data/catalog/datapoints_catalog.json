@@ -1,0 +1,3971 @@
+{
+  "catalog_id": "benefits-review",
+  "catalog_version": "2026-05-sgp-v1",
+  "country": "SGP",
+  "survey_config_version": "sgp-benefits-survey-2026",
+  "owner": "Benefits Benchmarking",
+  "total_datapoints": 160,
+  "items": [
+    {
+      "comparison_key": "ret_prev",
+      "pretty_name": "Retirement, General Prevalence",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Does the organization provide retirement benefits? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Retirement section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_plan_type",
+      "pretty_name": "Retirement, Plan Type",
+      "benefit_topic": "Retirement",
+      "company_prompt": "What types of retirement plans are available to employees? Extract plan types (e.g., Defined Benefit, Defined Contribution, CPF).",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Types of retirement plans available to employees",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_elig_exec",
+      "pretty_name": "Retirement, Eligibility - Executive",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Are executives covered by the retirement plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Executive",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_elig_mid",
+      "pretty_name": "Retirement, Eligibility - Middle Mgmt",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Are middle managers/senior professionals covered by the retirement plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Middle manager and senior professional",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_elig_sup",
+      "pretty_name": "Retirement, Eligibility - Supervisory",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Are supervisory/professional staff covered by the retirement plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Supervisory and professional",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_elig_tech",
+      "pretty_name": "Retirement, Eligibility - Technical/Support",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Are technical/business support staff covered by the retirement plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Technical and business support",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_elig_prod",
+      "pretty_name": "Retirement, Eligibility - Production",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Are production/manual labor staff covered by the retirement plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Production and manual labor",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_cash_lieu_cpf",
+      "pretty_name": "Retirement, Cash in Lieu of CPF",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Does the organization provide cash in lieu of CPF for employed foreigners? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Do organizations provide cash in lieu of CPF",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_cash_lieu_method",
+      "pretty_name": "Retirement, Cash in Lieu Method",
+      "benefit_topic": "Retirement",
+      "company_prompt": "How is the cash in lieu (cash allowance) determined? Extract method description.",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "How cash in lieu (cash allowance) is determined",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_cash_lieu_tax",
+      "pretty_name": "Retirement, Cash in Lieu Tax Gross-Up",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Is the cash in lieu of CPF grossed up for tax? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Is the cash in lieu of CPF (cash allowance) grossed up for tax?",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_er_contrib_rate",
+      "pretty_name": "Retirement, Employer Contribution Rate",
+      "benefit_topic": "Retirement",
+      "company_prompt": "What is the employer contribution rate for retirement? Extract percentage or description.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F5",
+      "market_mapping": {
+        "question": "Employer contribution rate' or 'CPF employer contribution rate",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_ee_contrib_rate",
+      "pretty_name": "Retirement, Employee Contribution Rate",
+      "benefit_topic": "Retirement",
+      "company_prompt": "What is the employee contribution rate for retirement? Extract percentage or description.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F5",
+      "market_mapping": {
+        "question": "Employee contribution rate' or 'CPF employee contribution rate",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_vesting",
+      "pretty_name": "Retirement, Vesting Schedule",
+      "benefit_topic": "Retirement",
+      "company_prompt": "What is the vesting schedule for employer retirement contributions? Extract schedule or 'Immediate'.",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Vesting schedule' or 'Vesting period",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "ret_waiting_period",
+      "pretty_name": "Retirement, Waiting Period",
+      "benefit_topic": "Retirement",
+      "company_prompt": "Is there a waiting period before employees can participate in the retirement plan? Extract duration or 'None'.",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Waiting period' or 'Service requirement",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_prev",
+      "pretty_name": "Healthcare, General Prevalence",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Does the organization provide healthcare benefits? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Healthcare section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dental_routine",
+      "pretty_name": "Healthcare, Dental - Routine Services",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are routine dental services available to employees? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Types of dental services available to employees",
+        "option": "Routine",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dental_ortho",
+      "pretty_name": "Healthcare, Dental - Orthodontics",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are orthodontic services available to employees? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Types of dental services available to employees",
+        "option": "Orthodontics",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dental_reimb_pct",
+      "pretty_name": "Healthcare, Dental Reimbursement %",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the reimbursement percentage for dental services? Extract percentage.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F5",
+      "market_mapping": {
+        "question": "Reimbursement percentage for dental services",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dental_annual_max_ee",
+      "pretty_name": "Healthcare, Dental Annual Max - Employee",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the annual maximum amount for dental services for employees? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual maximum amount of dental services for employees",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dental_annual_max_dep",
+      "pretty_name": "Healthcare, Dental Annual Max - Dependents",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the annual maximum amount for dental services for dependents? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual maximum amount of dental services for dependents",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dental_copay",
+      "pretty_name": "Healthcare, Dental Copayment",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are employees required to pay a copayment for dental services? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Are employees required to pay a fixed amount on receiving dental services (copayment)?",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_elig_exec",
+      "pretty_name": "Healthcare, Eligibility - Executive",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are executives covered by the healthcare plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Executive",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_elig_prod",
+      "pretty_name": "Healthcare, Eligibility - Production",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are production/manual labor staff covered by the healthcare plan? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered by this plan",
+        "option": "Production and manual labor",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dep_surg",
+      "pretty_name": "Healthcare, Dependent Coverage - Surgery",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Who is eligible for dependent surgery/hospitalization coverage? Extract coverage scope (e.g., 'Employee plus spouse/partner and children').",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependents eligible for healthcare coverage",
+        "option": "Surgery/hospitalization",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dep_outpatient",
+      "pretty_name": "Healthcare, Dependent Coverage - Outpatient",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Who is eligible for dependent outpatient coverage? Extract coverage scope.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependents eligible for healthcare coverage",
+        "option": "Outpatient",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dep_major_med",
+      "pretty_name": "Healthcare, Dependent Coverage - Major Medical",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Who is eligible for dependent major medical coverage? Extract coverage scope.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependents eligible for healthcare coverage",
+        "option": "Major medical",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_dep_dental",
+      "pretty_name": "Healthcare, Dependent Coverage - Dental",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Who is eligible for dependent dental coverage? Extract coverage scope.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependents eligible for healthcare coverage",
+        "option": "Dental",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_ee_contrib",
+      "pretty_name": "Healthcare, Employee Contributions",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are employees required to contribute toward healthcare premiums? Extract Yes/No and amount/percentage if available.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes",
+        "market_prevalence_inverted": true
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "How the cost of healthcare is covered' or 'Employee contributions",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_surg_coverage_pct",
+      "pretty_name": "Healthcare, Surgery Coverage %",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What percentage of surgery/hospitalization costs are covered? Extract percentage.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F2",
+      "market_mapping": {
+        "question": "Covered percentage' under Surgery/hospitalization",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_surg_room_type",
+      "pretty_name": "Healthcare, Surgery - Room Type",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What room type is provided for hospitalization? Extract room type (e.g., Private, Semi-Private, Ward).",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Room type' or 'Room and board type",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_surg_annual_max",
+      "pretty_name": "Healthcare, Surgery - Annual Maximum",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the annual maximum for surgery/hospitalization benefits? Extract amount or 'Unlimited'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual maximum' under Surgery/hospitalization",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_surg_deductible",
+      "pretty_name": "Healthcare, Surgery - Deductible",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is there a deductible for surgery/hospitalization? Extract amount or 'None'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Deductible' or 'Excess' under Surgery/hospitalization",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_coverage",
+      "pretty_name": "Healthcare, Outpatient - Coverage %",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What percentage of outpatient costs are covered? Extract percentage.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F3",
+      "market_mapping": {
+        "question": "Covered percentage' under Outpatient",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_annual_max",
+      "pretty_name": "Healthcare, Outpatient - Annual Maximum",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the annual maximum for outpatient benefits? Extract amount or 'Unlimited'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual maximum' under Outpatient",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_copay",
+      "pretty_name": "Healthcare, Outpatient - Copayment",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the copayment for outpatient visits? Extract percentage or amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Copayment' or 'Co-insurance' under Outpatient",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_gp",
+      "pretty_name": "Healthcare, Outpatient - GP Visits",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are GP/general practitioner visits covered under outpatient? Extract Yes/No and limit if applicable.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "General practitioner' under Outpatient",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_specialist",
+      "pretty_name": "Healthcare, Outpatient - Specialist",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are specialist visits covered under outpatient? Extract Yes/No and limit if applicable.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Specialist' under Outpatient",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_major_med_prev",
+      "pretty_name": "Healthcare, Major Medical Prevalence",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Does the organization provide major medical coverage? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Major medical' prevalence or coverage availability",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_major_med_lifetime_max",
+      "pretty_name": "Healthcare, Major Medical - Lifetime Max",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the lifetime maximum for major medical? Extract amount or 'Unlimited'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Lifetime maximum' under Major medical",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_maternity_coverage",
+      "pretty_name": "Healthcare, Maternity Coverage",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is maternity coverage provided? Extract Yes/No and scope (normal delivery, complications, pre/postnatal).",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Types of maternity coverage' or 'Maternity benefits provided",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_maternity_normal_max",
+      "pretty_name": "Healthcare, Maternity - Normal Delivery Max",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the maximum benefit for normal delivery? Extract amount or 'As charged'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Normal delivery maximum' or 'Normal delivery limit",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_maternity_comp_max",
+      "pretty_name": "Healthcare, Maternity - Complications Max",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the maximum benefit for complicated delivery? Extract amount or 'As charged'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Caesarean/Complicated delivery maximum",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_vision_prev",
+      "pretty_name": "Healthcare, Vision Prevalence",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is vision coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Vision' coverage availability",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_vision_annual_max",
+      "pretty_name": "Healthcare, Vision - Annual Maximum",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What is the annual maximum for vision benefits? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual maximum amount for vision",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_vision_exam",
+      "pretty_name": "Healthcare, Vision - Eye Examination",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Are routine eye examinations covered? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Eye examination' under Vision",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_provider_network",
+      "pretty_name": "Healthcare, Provider Network",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "What type of provider network is used? Extract type (e.g., Panel, Open, Managed Care).",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Type of provider network' or 'Network arrangement",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_retiree_coverage",
+      "pretty_name": "Healthcare, Retiree Coverage",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is healthcare coverage extended to retirees? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Retiree healthcare coverage' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_portable_scheme",
+      "pretty_name": "Healthcare, Portable Medical Benefit",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is a portable medical benefit scheme provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Portable medical benefit scheme",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_prev",
+      "pretty_name": "Wellbeing, General Prevalence",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Does the organization provide wellbeing programs? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Wellbeing section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_eap_prev",
+      "pretty_name": "Wellbeing, EAP Prevalence",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Is an Employee Assistance Program (EAP) provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee assistance plan (EAP)' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_eap_sessions",
+      "pretty_name": "Wellbeing, EAP - Sessions Per Year",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "How many EAP counseling sessions per year are available? Extract number.",
+      "value_type": "number",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Number of sessions' or 'Annual session limit' for EAP",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "well_eap_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_eap_scope",
+      "pretty_name": "Wellbeing, EAP - Scope of Services",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "What services does the EAP cover? Extract service list (counseling, legal, financial, etc.).",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Types of EAP services' or 'EAP coverage scope",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "well_eap_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_eap_dep_access",
+      "pretty_name": "Wellbeing, EAP - Dependent Access",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Do dependents/family members have access to EAP services? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "EAP available to dependents' or 'Family members eligible",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "well_eap_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_emotional_stress",
+      "pretty_name": "Wellbeing, Emotional - Stress Management",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are stress management programs provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Stress management' or 'Mental health programs",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_emotional_resilience",
+      "pretty_name": "Wellbeing, Emotional - Resilience Training",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are resilience/mindfulness training programs provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Resilience training' or 'Mindfulness programs",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_emotional_digital",
+      "pretty_name": "Wellbeing, Emotional - Digital Tools",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are digital mental health tools/apps provided? Extract Yes/No and name if available.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Digital mental health tools' or 'Mental health app",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_physical_checkup",
+      "pretty_name": "Wellbeing, Physical - Health Screening",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are periodic health check-ups/screenings provided? Extract Yes/No and frequency.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Medical check-ups/health screenings",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_physical_checkup_amount",
+      "pretty_name": "Wellbeing, Physical - Screening Budget",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "What is the annual budget/allowance for health screenings? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Health screening allowance' or 'Medical check-up budget",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_physical_gym",
+      "pretty_name": "Wellbeing, Physical - Gym/Fitness",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are gym memberships or fitness subsidies provided? Extract Yes/No and amount if available.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Gym membership' or 'Fitness subsidies",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_physical_sports",
+      "pretty_name": "Wellbeing, Physical - Sports Activities",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are company-organized sports/recreation activities provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Sports activities' or 'Recreation programs",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_financial_planning",
+      "pretty_name": "Wellbeing, Financial - Planning Services",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are financial planning/advisory services provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Financial planning' or 'Financial advisory",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_financial_literacy",
+      "pretty_name": "Wellbeing, Financial - Literacy Programs",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are financial literacy/education programs provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Financial literacy' or 'Financial education",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_financial_discount",
+      "pretty_name": "Wellbeing, Financial - Employee Discounts",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are employee discount programs provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Employee discounts' or 'Discount programs",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_social_community",
+      "pretty_name": "Wellbeing, Social - Community Programs",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are community/volunteering programs provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Community programs' or 'Volunteering",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_social_team_building",
+      "pretty_name": "Wellbeing, Social - Team Building",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are team building/social events provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Team building' or 'Social events",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_social_flex_work",
+      "pretty_name": "Wellbeing, Social - Flexible Working",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are flexible working arrangements provided? Extract types (remote, hybrid, flextime).",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Flexible working' or 'Work from home",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_elig_exec",
+      "pretty_name": "Wellbeing, Eligibility - Executive",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are executives eligible for wellbeing programs? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered",
+        "option": "Executive' under Wellbeing",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_elig_all",
+      "pretty_name": "Wellbeing, Eligibility - All Staff",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are all employee categories eligible for wellbeing programs? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all employee categories under Wellbeing",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_prev",
+      "pretty_name": "Risk Benefits, General Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Does the organization provide risk benefits (life/disability insurance)? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Risk Benefits section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_life_prev",
+      "pretty_name": "Risk Benefits, Life Insurance Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is life insurance provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Life' or 'Life insurance' prevalence under Risk Benefits",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_life_multiple",
+      "pretty_name": "Risk Benefits, Life Insurance - Multiple of Salary",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the life insurance benefit as a multiple of salary? Extract multiple (e.g., '3x annual salary').",
+      "value_type": "salary_multiple",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Multiple of salary' or 'Benefit amount' under Life",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_life_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_life_flat_amount",
+      "pretty_name": "Risk Benefits, Life Insurance - Flat Amount",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is life insurance provided as a flat amount? Extract amount or 'Multiple of salary'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Fixed/flat benefit' under Life insurance",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_life_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_life_ee_contrib",
+      "pretty_name": "Risk Benefits, Life Insurance - EE Contribution",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Are employees required to contribute toward life insurance premiums? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee contributions' under Life",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_life_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_add_prev",
+      "pretty_name": "Risk Benefits, AD&D Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is accidental death and disability (AD&D) coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Accidental death or disability (AD&D)' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_add_multiple",
+      "pretty_name": "Risk Benefits, AD&D - Multiple of Salary",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the AD&D benefit as a multiple of salary? Extract multiple.",
+      "value_type": "salary_multiple",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Multiple of salary' under AD&D",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_add_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ci_prev",
+      "pretty_name": "Risk Benefits, Critical Illness Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is critical illness (CI) coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Critical illness (CI)' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ci_amount",
+      "pretty_name": "Risk Benefits, Critical Illness - Benefit Amount",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the critical illness benefit amount? Extract amount or multiple.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit amount' or 'Sum insured' under Critical illness",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_ci_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ci_conditions",
+      "pretty_name": "Risk Benefits, Critical Illness - Conditions Covered",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "How many critical illness conditions are covered? Extract number or list.",
+      "value_type": "number",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Number of conditions' under Critical illness",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_ci_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_std_prev",
+      "pretty_name": "Risk Benefits, STD Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is short-term disability (STD) coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Short-term disability (STD)' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_std_duration",
+      "pretty_name": "Risk Benefits, STD - Maximum Duration",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the maximum duration for STD benefits? Extract duration (weeks/months).",
+      "value_type": "weeks",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Maximum benefit duration' under STD",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_std_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_std_pct_salary",
+      "pretty_name": "Risk Benefits, STD - % of Salary",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What percentage of salary is paid during short-term disability? Extract percentage.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F5",
+      "market_mapping": {
+        "question": "Percentage of salary' or 'Benefit percentage' under STD",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_std_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ltd_prev",
+      "pretty_name": "Risk Benefits, LTD Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is long-term disability (LTD) coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Long-term disability (LTD)' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ltd_pct_salary",
+      "pretty_name": "Risk Benefits, LTD - % of Salary",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What percentage of salary is paid during long-term disability? Extract percentage.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F5",
+      "market_mapping": {
+        "question": "Percentage of salary' or 'Benefit percentage' under LTD",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_ltd_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ltd_waiting",
+      "pretty_name": "Risk Benefits, LTD - Waiting Period",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the waiting/elimination period for LTD benefits? Extract duration.",
+      "value_type": "duration",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Waiting period' or 'Elimination period' under LTD",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_ltd_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_ltd_max_age",
+      "pretty_name": "Risk Benefits, LTD - Maximum Benefit Age",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Until what age are LTD benefits payable? Extract age or 'Retirement age'.",
+      "value_type": "age",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Maximum benefit age' or 'Benefit ceases at' under LTD",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_ltd_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_tpd_prev",
+      "pretty_name": "Risk Benefits, TPD Prevalence",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is total and permanent disability (TPD) coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Total and permanent disability (TPD)' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_tpd_amount",
+      "pretty_name": "Risk Benefits, TPD - Benefit Amount",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the TPD benefit amount? Extract amount or multiple of salary.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit amount' under TPD",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_tpd_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_elig_exec",
+      "pretty_name": "Risk Benefits, Eligibility - Executive",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Are executives covered by risk benefit plans? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered",
+        "option": "Executive' under Risk Benefits",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_elig_all",
+      "pretty_name": "Risk Benefits, Eligibility - All Staff",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Are all employee categories covered by risk benefit plans? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all categories under Risk Benefits",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_dep_life",
+      "pretty_name": "Risk Benefits, Dependent Life Coverage",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is dependent life insurance coverage provided? Extract Yes/No and scope.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependent coverage' under Life",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_prev",
+      "pretty_name": "Business Travel Insurance, General Prevalence",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Does the organization provide business travel insurance? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Business Travel Insurance section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_accident_prev",
+      "pretty_name": "Business Travel Insurance, Accident Coverage",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Is business travel accident coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Business travel accident' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_accident_amount",
+      "pretty_name": "Business Travel Insurance, Accident - Benefit Amount",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "What is the accidental death benefit for business travel? Extract amount or multiple.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Accidental death benefit' or 'Sum insured' under Business travel accident",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_medical_prev",
+      "pretty_name": "Business Travel Insurance, Medical Coverage",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Is business travel medical coverage provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Business travel medical' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_medical_max",
+      "pretty_name": "Business Travel Insurance, Medical - Annual Max",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "What is the maximum medical coverage for business travel? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Medical maximum' or 'Medical expenses limit' under Business travel",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_evac_prev",
+      "pretty_name": "Business Travel Insurance, Emergency Evacuation",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Is emergency medical evacuation covered? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Emergency evacuation' or 'Medical repatriation",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_trip_cancel",
+      "pretty_name": "Business Travel Insurance, Trip Cancellation",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Is trip cancellation/curtailment covered? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Trip cancellation' or 'Travel curtailment",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_baggage",
+      "pretty_name": "Business Travel Insurance, Baggage/Personal Effects",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Is baggage/personal effects loss covered? Extract Yes/No and limit.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Baggage' or 'Personal effects' under Business travel",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_elig_exec",
+      "pretty_name": "Business Travel Insurance, Eligibility - Executive",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Are executives covered by business travel insurance? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered",
+        "option": "Executive' under Business Travel",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_elig_all",
+      "pretty_name": "Business Travel Insurance, Eligibility - All Staff",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Are all employee categories covered by business travel insurance? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all categories under Business Travel",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_types",
+      "pretty_name": "Business Travel Insurance, Types of Coverage",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "What types of business travel insurance are provided? Extract list of coverage types.",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Types of business travel insurance",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "bti_dep_coverage",
+      "pretty_name": "Business Travel Insurance, Dependent Coverage",
+      "benefit_topic": "Business Travel Insurance",
+      "company_prompt": "Does business travel insurance extend to accompanying dependents? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependent/family coverage' under Business travel",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_prev",
+      "pretty_name": "Time Off, General Prevalence",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Does the organization provide time off benefits? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Time Off section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_annual_leave_days",
+      "pretty_name": "Time Off, Annual Leave - Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many annual leave/vacation days are provided? Extract number of days by employee category if available.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Number of annual leave days' or 'Paid vacation days",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_annual_leave_exec",
+      "pretty_name": "Time Off, Annual Leave - Executive Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many annual leave days for executives? Extract number.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual leave",
+        "option": "Executive' or 'Business unit head' vacation days",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_annual_leave_mid",
+      "pretty_name": "Time Off, Annual Leave - Middle Mgmt Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many annual leave days for middle managers? Extract number.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual leave",
+        "option": "Middle manager",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_annual_leave_entry",
+      "pretty_name": "Time Off, Annual Leave - Entry Level Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many annual leave days for entry-level/technical staff? Extract number.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Annual leave",
+        "option": "Technical and business support",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_annual_leave_increment",
+      "pretty_name": "Time Off, Annual Leave - Service Increment",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Does annual leave increase with years of service? Extract Yes/No and increment details.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Service-based increment' or 'Additional days by tenure",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_annual_leave_max",
+      "pretty_name": "Time Off, Annual Leave - Maximum Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "What is the maximum annual leave entitlement? Extract number.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Maximum vacation days' or 'Annual leave cap",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_sick_leave_days",
+      "pretty_name": "Time Off, Sick Leave - Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many paid sick leave days are provided? Extract number.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Number of sick leave days' or 'Paid sick days",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_maternity_weeks",
+      "pretty_name": "Time Off, Maternity Leave - Weeks",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many weeks of maternity leave are provided? Extract weeks/days and paid vs unpaid split.",
+      "value_type": "weeks",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Maternity leave duration' or 'Weeks of maternity leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_maternity_pay",
+      "pretty_name": "Time Off, Maternity Leave - Pay %",
+      "benefit_topic": "Time Off",
+      "company_prompt": "What percentage of salary is paid during maternity leave? Extract percentage.",
+      "value_type": "percentage",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F5",
+      "market_mapping": {
+        "question": "Maternity pay' or 'Percentage of salary during maternity",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_paternity_days",
+      "pretty_name": "Time Off, Paternity Leave - Days",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many paternity leave days are provided? Extract days.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Paternity leave' duration",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_parental_leave",
+      "pretty_name": "Time Off, Parental Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is shared/parental leave provided beyond maternity/paternity? Extract Yes/No and duration.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Parental leave' or 'Shared parental leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_adoption_leave",
+      "pretty_name": "Time Off, Adoption Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is adoption leave provided? Extract Yes/No and duration.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Adoption leave' duration",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_public_holidays",
+      "pretty_name": "Time Off, Public Holidays",
+      "benefit_topic": "Time Off",
+      "company_prompt": "How many public/bank holidays per year? Extract number.",
+      "value_type": "days",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Number of public holidays' or 'Gazetted holidays",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_compassionate",
+      "pretty_name": "Time Off, Compassionate/Bereavement Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is compassionate/bereavement leave provided? Extract Yes/No and days.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Compassionate leave' or 'Bereavement leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_marriage_leave",
+      "pretty_name": "Time Off, Marriage Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is marriage leave provided? Extract Yes/No and days.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Marriage leave' or 'Wedding leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_study_leave",
+      "pretty_name": "Time Off, Study/Exam Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is study/examination leave provided? Extract Yes/No and days.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Study leave' or 'Examination leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_unused_carryover",
+      "pretty_name": "Time Off, Unused Leave - Carry Over",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Can unused annual leave be carried over? Extract Yes/No and limit.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Carry over' or 'Unused vacation/annual leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_unused_payout",
+      "pretty_name": "Time Off, Unused Leave - Cash Payout",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Can unused annual leave be cashed out? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Cash out' or 'Payment in lieu of leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_volunteer_leave",
+      "pretty_name": "Time Off, Volunteer Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is paid volunteer/community service leave provided? Extract Yes/No and days.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Volunteer leave' or 'Community service leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_elig_all",
+      "pretty_name": "Time Off, Eligibility - All Staff",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Are time off benefits available to all employee categories? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all categories under Time Off",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_prev",
+      "pretty_name": "Perquisites, General Prevalence",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Does the organization provide perquisites? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Perquisites section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_types",
+      "pretty_name": "Perquisites, Types Offered",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "What types of perquisites are offered? Extract list.",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Type of perquisites' or 'Perquisites offered",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_edu_prev",
+      "pretty_name": "Perquisites, Education/Training Prevalence",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Is employee education/training support provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee education, training and/or professional development",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_edu_amount",
+      "pretty_name": "Perquisites, Education - Annual Allowance",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "What is the annual education/training allowance? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Training budget' or 'Education allowance amount",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_edu_types",
+      "pretty_name": "Perquisites, Education - Types Supported",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "What types of education/development are supported? Extract list (degree, certification, conference, etc.).",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Types of professional development' or 'Education support categories",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_child_edu_prev",
+      "pretty_name": "Perquisites, Children's Education Prevalence",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Is children's education assistance provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Children's education\" prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_child_edu_amount",
+      "pretty_name": "Perquisites, Children's Education - Amount",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "What is the children's education allowance/subsidy? Extract amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Children's education allowance\" or 'Tuition subsidy",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_service_award_prev",
+      "pretty_name": "Perquisites, Service Awards Prevalence",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Are length of service awards provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Length of service awards' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_service_award_milestones",
+      "pretty_name": "Perquisites, Service Awards - Milestones",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "At what service milestones are awards given? Extract years (e.g., 5, 10, 15, 20).",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Service milestones' or 'Award trigger years",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_service_award_type",
+      "pretty_name": "Perquisites, Service Awards - Award Type",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "What form do service awards take? Extract type (cash, gift, extra leave, etc.).",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Type of service award' or 'Award form",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_tuition_prev",
+      "pretty_name": "Perquisites, Tuition Reimbursement",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Is tuition reimbursement provided for higher education? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Tuition allowance' or 'Tuition reimbursement",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_prof_dev",
+      "pretty_name": "Perquisites, Professional Development",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Are professional development programs (conferences, certifications) supported? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Professional development' prevalence",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_elig_exec",
+      "pretty_name": "Perquisites, Eligibility - Executive",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Are executives eligible for perquisites? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Employee categories covered",
+        "option": "Executive' under Perquisites",
+        "match_strategy": "exact_option"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_elig_all",
+      "pretty_name": "Perquisites, Eligibility - All Staff",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Are all employee categories eligible for perquisites? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all categories under Perquisites",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_prev",
+      "pretty_name": "Benefits Flexibility, General Prevalence",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "Does the organization offer benefits flexibility and choice? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Benefits flexibility and choice section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_plan_type",
+      "pretty_name": "Benefits Flexibility, Plan Type",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "What type of flexible benefits plan is offered? Extract type (modular, flex allowance, salary sacrifice, etc.).",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Type of flexible benefits plan",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "flex_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_voluntary_benefits",
+      "pretty_name": "Benefits Flexibility, Voluntary Benefits",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "Are voluntary/optional benefits offered? Extract Yes/No and types available.",
+      "value_type": "multi_select_list",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F1",
+      "market_mapping": {
+        "question": "Voluntary benefits' or 'Optional benefits",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "flex_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_allowance_amount",
+      "pretty_name": "Benefits Flexibility, Flex Allowance Amount",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "What is the flexible benefits allowance amount? Extract amount or 'Not applicable'.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Flex allowance' or 'Flexible spending amount",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "flex_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_enrollment_freq",
+      "pretty_name": "Benefits Flexibility, Enrollment Frequency",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "How often can employees change their benefit selections? Extract frequency (annually, quarterly, life event).",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Enrollment period' or 'Selection frequency",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "flex_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_buyup_options",
+      "pretty_name": "Benefits Flexibility, Buy-Up Options",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "Can employees buy up additional coverage? Extract Yes/No and types.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Buy-up' or 'Additional coverage options",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "flex_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "flex_elig_all",
+      "pretty_name": "Benefits Flexibility, Eligibility - All Staff",
+      "benefit_topic": "Benefits Flexibility and Choice",
+      "company_prompt": "Are flexible benefits available to all employee categories? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all categories under Flexibility",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "flex_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_surg_preauth",
+      "pretty_name": "Healthcare, Surgery - Pre-Authorization",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is pre-authorization required for hospitalization? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Pre-authorization' or 'Prior approval' under Surgery",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_tcm",
+      "pretty_name": "Healthcare, Outpatient - TCM/Alternative",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is Traditional Chinese Medicine or alternative therapy covered under outpatient? Extract Yes/No and limit.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "TCM' or 'Traditional Chinese Medicine' or 'Alternative medicine",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_outpatient_physio",
+      "pretty_name": "Healthcare, Outpatient - Physiotherapy",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is physiotherapy covered under outpatient? Extract Yes/No and annual limit.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Physiotherapy' under Outpatient",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "health_maternity_prenatal",
+      "pretty_name": "Healthcare, Maternity - Prenatal Coverage",
+      "benefit_topic": "Healthcare",
+      "company_prompt": "Is prenatal/antenatal care covered? Extract Yes/No and limit.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Prenatal' or 'Antenatal' coverage under Maternity",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_life_dep_amount",
+      "pretty_name": "Risk Benefits, Dependent Life - Benefit Amount",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "What is the dependent life insurance benefit amount? Extract amount or multiple.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dependent life benefit amount",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_dep_life",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "risk_add_dismember",
+      "pretty_name": "Risk Benefits, AD&D - Dismemberment Schedule",
+      "benefit_topic": "Risk Benefits",
+      "company_prompt": "Is a dismemberment/loss of limb schedule included in AD&D? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Dismemberment schedule' or 'Loss of limb",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "risk_add_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_childcare_leave",
+      "pretty_name": "Time Off, Childcare Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is paid childcare leave provided? Extract Yes/No and days per year.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Childcare leave' or 'Extended infant care",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "to_ns_leave",
+      "pretty_name": "Time Off, National Service Leave",
+      "benefit_topic": "Time Off",
+      "company_prompt": "Is paid leave for national/military service provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "National service leave' or 'Reservist leave",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_physical_vaccination",
+      "pretty_name": "Wellbeing, Physical - Vaccination Program",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Is a company-sponsored vaccination program provided? Extract Yes/No and types (flu, COVID, travel).",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "Vaccination program' or 'Flu vaccination",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "well_social_dei",
+      "pretty_name": "Wellbeing, Social - DEI Programs",
+      "benefit_topic": "Wellbeing",
+      "company_prompt": "Are Diversity, Equity & Inclusion (DEI) programs provided? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F6",
+      "market_mapping": {
+        "question": "DEI' or 'Diversity and inclusion",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_transport",
+      "pretty_name": "Perquisites, Transportation Allowance",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Is a transportation/commuting allowance provided? Extract Yes/No and amount.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Transport allowance' or 'Commuting subsidy",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "perq_mobile_phone",
+      "pretty_name": "Perquisites, Mobile Phone/Communication",
+      "benefit_topic": "Perquisites",
+      "company_prompt": "Is a mobile phone or communication allowance provided? Extract Yes/No and amount.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Mobile phone allowance' or 'Communication allowance",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "meal_prev",
+      "pretty_name": "Meal Benefits, General Prevalence",
+      "benefit_topic": "Meal Benefits",
+      "company_prompt": "Does the organization provide meal benefits? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Benefit Topic Provided' in Meal benefits section",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "meal_type",
+      "pretty_name": "Meal Benefits, Type of Provision",
+      "benefit_topic": "Meal Benefits",
+      "company_prompt": "What type of meal benefit is provided? Extract type (subsidized canteen, meal vouchers, meal allowance, free meals).",
+      "value_type": "category",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "selected_option_prevalence"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Type of meal benefit' or 'Meal provision method",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "meal_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "meal_amount",
+      "pretty_name": "Meal Benefits, Daily/Monthly Amount",
+      "benefit_topic": "Meal Benefits",
+      "company_prompt": "What is the meal allowance/subsidy amount? Extract daily or monthly amount.",
+      "value_type": "amount",
+      "alignment": {
+        "logic": "50th Percentile",
+        "basis": "numeric_percentile"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Meal allowance' or 'Daily meal subsidy",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "meal_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    },
+    {
+      "comparison_key": "meal_elig_all",
+      "pretty_name": "Meal Benefits, Eligibility - All Staff",
+      "benefit_topic": "Meal Benefits",
+      "company_prompt": "Are meal benefits available to all employee categories? Extract Yes/No.",
+      "value_type": "yes_no",
+      "alignment": {
+        "logic": "Prevalence",
+        "basis": "yes_no_prevalence",
+        "positive_option": "Yes"
+      },
+      "format_tag": "F4",
+      "market_mapping": {
+        "question": "Coverage across all categories under Meal benefits",
+        "option": null,
+        "match_strategy": "section_match"
+      },
+      "dependencies": {
+        "parent_key": "meal_prev",
+        "required_parent_values": [
+          "Yes"
+        ],
+        "if_not_met": "N/A"
+      },
+      "output_rules": {
+        "allow_not_provided": true,
+        "dual_blank_outputs_na": true,
+        "suppress_plan_names": true,
+        "no_literal_line_breaks": true
+      }
+    }
+  ]
+}
