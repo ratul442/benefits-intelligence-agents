@@ -340,33 +340,51 @@ The agent will assume Singapore market norms and state all assumptions in its re
 
 ## Deploying to Foundry
 
-### Via azd
+The agent is packaged as a Docker container and deployed as a **hosted Foundry
+agent** using the **Responses** protocol. The complete, copy-pasteable guide —
+prerequisites, image build, RBAC, registration via REST, and invocation — is in
+[`DEPLOYMENT_STEPS.md`](DEPLOYMENT_STEPS.md). The summary below covers the main paths.
+
+**Prerequisites:** an Azure subscription with Azure AI Foundry, Azure CLI (`az login`),
+an Azure Container Registry, a Foundry project, and a `gpt-4.1-mini` model deployment.
+If you use Skills/Toolbox, provision the skills first with `python provision_skills.py`.
+
+### Recommended: az acr build + register (REST)
 
 ```bash
-# Set environment variables
+cd benefits-advisor
+
+# 1. Build & push the image to ACR (cloud build — no local Docker needed)
+az acr build --registry <ACR_NAME> --image benefits-advisor:v1 \
+  --platform linux/amd64 --file Dockerfile --no-logs .
+
+# 2. Get the immutable digest
+az acr repository show-manifests --name <ACR_NAME> --repository benefits-advisor \
+  --query "[?tags[0]=='v1'].digest" -o tsv
+```
+
+Then grant RBAC (`AcrPull` to the project MI; **Foundry User** +
+**Cognitive Services OpenAI User** to the agent identity) and register the agent
+version via `POST /agents` (declaring the `responses` protocol and the image
+digest). Full commands and request bodies are in
+[`DEPLOYMENT_STEPS.md`](DEPLOYMENT_STEPS.md).
+
+> The platform injects `FOUNDRY_PROJECT_ENDPOINT` and other `FOUNDRY_*` variables —
+> do not declare them in `environment_variables`. Authentication uses Managed
+> Identity; no secrets are committed.
+
+### Alternative: Azure Developer CLI (azd)
+
+```bash
 azd env set AZURE_AI_MODEL_DEPLOYMENT_NAME "gpt-4.1-mini"
 azd env set TOOLBOX_NAME "benefits-advisor-tools"
 azd env set SKILL_NAMES "cost-analysis-methodology,regulatory-guidance-sgp"
 
-# Initialize and deploy
 azd ai agent init -m agent.manifest.yaml
 azd up
 ```
 
-### Via Docker + ACR
-
-```bash
-# Build
-docker build -t benefits-advisor:latest .
-
-# Tag for ACR
-docker tag benefits-advisor:latest <ACR_NAME>.azurecr.io/benefits-advisor:latest
-
-# Push
-docker push <ACR_NAME>.azurecr.io/benefits-advisor:latest
-```
-
-### Via Foundry Toolkit VS Code Extension
+### Alternative: Foundry Toolkit VS Code Extension
 
 1. Command Palette → `Foundry Toolkit: Deploy Hosted Agent`
 2. Select deployment method (Code or Container)

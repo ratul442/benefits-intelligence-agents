@@ -37,3 +37,37 @@ python test_local.py
 ```
 
 `test_local.py` exercises the pipeline locally with sample input. It is intended for validation before packaging the hosted agent.
+
+## Deploy to Microsoft Foundry
+
+The agent is packaged as a Docker container and deployed as a **hosted Foundry
+agent** using the **Invocations** protocol. The full, copy-pasteable guide —
+including RBAC, registration, and invocation — is in
+[`DEPLOYMENT_STEPS.md`](DEPLOYMENT_STEPS.md). The short version:
+
+**Prerequisites:** an Azure subscription with Azure AI Foundry, Azure CLI (`az login`),
+an Azure Container Registry, a Foundry project, and a chat model deployment
+(e.g. `gpt-5.4`).
+
+1. **Build & push the image** to ACR (cloud build — no local Docker needed):
+   ```bash
+   cd benefits-review
+   az acr build --registry <ACR_NAME> --image benefits-review:v1 \
+     --platform linux/amd64 --file Dockerfile --no-logs .
+   ```
+2. **Grant RBAC** — `AcrPull` to the project managed identity, and (after the
+   agent identity exists) **Foundry User** + **Cognitive Services OpenAI User** to
+   the agent identity. See [`DEPLOYMENT_STEPS.md`](DEPLOYMENT_STEPS.md) Step 2.
+3. **Register the agent version** via the Foundry REST API (`POST /agents`, then
+   `POST /agents/benefits-review` for updates), pointing at the image digest and
+   declaring the `invocations` protocol. See Step 3.
+4. **Poll for `active` status**, then **invoke** at
+   `/agents/benefits-review/endpoint/protocols/invocations?api-version=v1`.
+
+> The platform injects `FOUNDRY_PROJECT_ENDPOINT` and
+> `APPLICATIONINSIGHTS_CONNECTION_STRING` — do not declare them in the agent's
+> `environment_variables`. Authentication uses Managed Identity; no secrets are
+> committed.
+
+Deployment manifests (`agent.yaml`, `agent.manifest.yaml`) are included for
+`azd`/toolkit-based flows as an alternative to the manual REST steps above.

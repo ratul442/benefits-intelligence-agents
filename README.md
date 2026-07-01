@@ -63,7 +63,8 @@ you fill in with your own Azure resource values.
 2. Copy `.env.example` → `.env` and fill in your own Foundry project endpoint,
    model deployment, and (where applicable) storage/toolbox/skill settings.
 3. Run its local smoke test (`test_local.py`) or build and deploy it as a hosted
-   Foundry agent using its `DEPLOYMENT_STEPS.md` (where provided) and
+   Foundry agent following its **`DEPLOYMENT_STEPS.md`** (an end-to-end guide:
+   ACR image build → RBAC → agent registration → invocation) alongside its
    `agent.manifest.yaml`.
 
 > **Configuration uses placeholders** like `<FOUNDRY_RESOURCE>`,
