@@ -55,6 +55,10 @@ class DatapointEntry(BaseModel):
     market_mapping: MarketMapping | None = None
     dependencies: DependencyRule | None = None
     output_rules: OutputRules = Field(default_factory=OutputRules)
+    source_sort_order: int | None = None
+    source_primary_name: str | None = None
+    source_country_iso: str | None = None
+    source_benefit_type: str | None = None
 
     # Legacy compat — derived from alignment.logic
     @property

@@ -97,6 +97,7 @@ async def _process_single_topic(
     client,
     topic_slice: TopicSlice,
     model: str,
+    country: str,
 ) -> TopicResult:
     """Process a single benefit topic: build prompt → call LLM → parse output."""
     start = time.perf_counter()
@@ -108,6 +109,7 @@ async def _process_single_topic(
             company_slice=topic_slice.company_slice,
             market_slice=topic_slice.market_slice,
             datapoints=topic_slice.datapoints,
+            country=country,
         )
 
         # Responses API: system message goes in 'instructions', user messages in 'input'
@@ -194,7 +196,7 @@ async def run_benefits_review(
         )
 
     # Step 2: Process all topics in parallel (maximum speed)
-    tasks = [_process_single_topic(client, s, model_name) for s in slices]
+    tasks = [_process_single_topic(client, s, model_name, request.country) for s in slices]
     results: list[TopicResult] = await asyncio.gather(*tasks)
 
     # Step 2b: Auto-retry topics that crashed due to OTel NonRecordingSpan tracing bug.
@@ -207,7 +209,7 @@ async def run_benefits_review(
     if failed_indices:
         logger.info("Retrying %d topics that hit tracing errors", len(failed_indices))
         retry_tasks = [
-            _process_single_topic(client, slices[i], model_name)
+            _process_single_topic(client, slices[i], model_name, request.country)
             for i in failed_indices
         ]
         retry_results = await asyncio.gather(*retry_tasks)
@@ -241,6 +243,15 @@ async def run_benefits_review(
 
     # Step 8: Validate output format rules (line breaks, plan name leakage)
     all_rows = validate_output_format(all_rows, request.datapoints_catalog)
+
+    # Preserve the authoritative catalog's one-to-one source order.
+    catalog_order = {
+        datapoint.comparison_key: index
+        for index, datapoint in enumerate(request.datapoints_catalog)
+    }
+    all_rows.sort(
+        key=lambda row: catalog_order.get(row.comparison_key, len(catalog_order))
+    )
 
     total, completed, na = count_valid_rows(all_rows)
     elapsed_ms = int((time.perf_counter() - start) * 1000)

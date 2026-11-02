@@ -46,6 +46,20 @@ _MARKET_IN_COMPANY_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+_COMPOUND_VALUE_PATTERN = re.compile(r"(?:<br>|::|(?:^|\s)[•])", re.IGNORECASE)
+_QUALITATIVE_VALUE_PATTERN = re.compile(
+    r"\b(?:no\s+(?:overall\s+)?(?:maximum|cap|limit)|unlimited|not\s+capped|fully\s+covered)\b",
+    re.IGNORECASE,
+)
+_BASIS_PATTERNS: dict[str, re.Pattern[str]] = {
+    "annual": re.compile(r"\b(?:annual|annually|per\s+year|yearly)\b", re.IGNORECASE),
+    "per_birth": re.compile(r"\b(?:per\s+birth|per\s+delivery|per\s+pregnancy|per\s+confinement)\b", re.IGNORECASE),
+    "per_visit": re.compile(r"\b(?:per\s+visit|per\s+consultation)\b", re.IGNORECASE),
+    "per_day": re.compile(r"\b(?:per\s+day|daily)\b", re.IGNORECASE),
+    "lifetime": re.compile(r"\b(?:lifetime|whole\s+life)\b", re.IGNORECASE),
+    "monthly": re.compile(r"\b(?:monthly|per\s+month)\b", re.IGNORECASE),
+}
+
 
 def extract_prevalence_pct(market_practice: str) -> tuple[float | None, bool]:
     """Extract the prevalence percentage and its polarity from market_practice.
@@ -119,8 +133,14 @@ def _extract_numeric(value: str) -> float | None:
     # Reject range values (e.g. "22-30", "22–30") — ambiguous for scoring
     if re.search(r"\d+\s*[-–]\s*\d+", value):
         return None
-    # Remove currency symbols, commas
-    cleaned = re.sub(r"[,$£€]", "", value)
+    # Remove leading currency codes/symbols and thousands separators.
+    # Examples: S$5,000, SGD 5,000, HK$5,000, HKD 5,000.
+    cleaned = re.sub(
+        r"^\s*(?:[A-Za-z]{1,3}\s*)?(?:[$£€¥₹]\s*)?",
+        "",
+        value,
+    )
+    cleaned = cleaned.replace(",", "")
     # Try to find a leading number (possibly with x suffix for multiples)
     match = re.match(r"([\d,]+(?:\.\d+)?)", cleaned)
     if match:
@@ -307,6 +327,30 @@ def compute_percentile_alignment(
     return "N/A", "Could not compute percentile alignment"
 
 
+def _is_straightforward_percentile_comparison(
+    company_provision: str,
+    market_practice: str,
+) -> bool:
+    """Return True only when deterministic scalar comparison is defensible."""
+    if _QUALITATIVE_VALUE_PATTERN.search(company_provision):
+        return False
+    if _COMPOUND_VALUE_PATTERN.search(company_provision) or _COMPOUND_VALUE_PATTERN.search(market_practice):
+        return False
+
+    company_bases = {
+        name for name, pattern in _BASIS_PATTERNS.items() if pattern.search(company_provision)
+    }
+    market_bases = {
+        name for name, pattern in _BASIS_PATTERNS.items() if pattern.search(market_practice)
+    }
+    if company_bases and market_bases and company_bases.isdisjoint(market_bases):
+        return False
+
+    return _extract_numeric(company_provision) is not None and any(
+        value is not None for value in _extract_percentile_values(market_practice).values()
+    )
+
+
 def _validate_value_type(company_provision: str, dp: DatapointEntry) -> list[str]:
     """Validate company_provision matches expected value_type.
 
@@ -437,16 +481,29 @@ def apply_deterministic_alignment(
                 row.company_provision, row.market_practice, dp
             )
         elif dp.alignment.logic == "50th Percentile":
-            # For percentile scoring, company value must be numeric
-            if type_errors and dp.value_type in NUMERIC_VALUE_TYPES:
-                # Cannot compute percentile on non-numeric value
+            if not _is_straightforward_percentile_comparison(
+                row.company_provision, row.market_practice
+            ):
+                # Compound, qualitative, or basis-incompatible values require a
+                # holistic judgment. Preserve the model alignment without
+                # treating a valid qualitative provision as a numeric failure.
+                row.validation_errors = [
+                    error for error in row.validation_errors
+                    if not error.startswith("Expected numeric")
+                ]
                 row.alignment_source = "llm"
-                row.validation_status = "review"
-                row.customer_safe = False
-                row.review_reason_code = "NON_NUMERIC_COMPANY_VALUE"
-                row.validation_errors.append(
-                    "Company value is not numeric; percentile alignment cannot be computed"
-                )
+                if row.market_alignment in ("", "N/A", "Not Provided"):
+                    row.validation_status = "review"
+                    row.customer_safe = False
+                    row.review_reason_code = "HOLISTIC_ALIGNMENT_REQUIRED"
+                    row.validation_errors.append(
+                        "Compound, qualitative, or non-equivalent measures require "
+                        "a supported holistic alignment"
+                    )
+                else:
+                    row.validation_status = "passed"
+                    row.customer_safe = True
+                    row.review_reason_code = None
                 continue
 
             det_alignment, err = compute_percentile_alignment(
