@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     llm_max_tokens: int = 16384
     llm_seed: int | None = None  # NOT supported by Responses API (400 error); retained for audit/future use
     llm_top_p: float | None = None  # If set, passed to responses.create; None = server default
+    llm_reasoning_effort: str = "low"
     catalog_version: str = ""
 
     # Deployment traceability
@@ -54,7 +55,9 @@ class Settings(BaseSettings):
                 or os.environ.get("FOUNDRY_AGENT_VERSION", "")
             )
         if not self.prompt_version:
-            self.prompt_version = os.environ.get("PROMPT_VERSION", "2026-05-sgp-v1")
+            self.prompt_version = os.environ.get(
+                "PROMPT_VERSION", "2026-11-extraction-accuracy-v2"
+            )
 
 
 settings = Settings()

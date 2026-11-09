@@ -1,10 +1,11 @@
 """Regression tests for comparability-aware validation and country context."""
 
+import json
 import unittest
 
 from src.alignment import apply_deterministic_alignment
 from src.models import AlignmentRule, DatapointEntry, ReportRow
-from src.prompt_builder import build_topic_messages
+from src.prompt_builder import _format_catalog, build_topic_messages
 
 
 def _percentile_datapoint() -> DatapointEntry:
@@ -96,6 +97,39 @@ class InterpretationTests(unittest.TestCase):
         self.assertIn("Country: SGP", system_message)
         self.assertIn("CPF", system_message)
         self.assertIn("do not infer a provision", system_message)
+
+    def test_extraction_instructions_require_factual_scope_and_denominators(self):
+        messages = build_topic_messages(
+            topic_name="Healthcare",
+            company_slice="## Healthcare\nCompany data",
+            market_slice="## Healthcare\nMarket data",
+            datapoints=[_percentile_datapoint()],
+            country="SGP",
+        )
+
+        system_message = messages[0]["content"]
+        normalized_message = " ".join(system_message.split())
+        self.assertIn("Independent datapoint scope", normalized_message)
+        self.assertIn("Prompt-completeness check", normalized_message)
+        self.assertIn("Exact market basis", normalized_message)
+        self.assertIn("No inferred statistics", normalized_message)
+        self.assertIn("no evidence from a different benefit", normalized_message)
+
+    def test_catalog_json_preserves_original_glb_prompt_exactly(self):
+        original_prompt = (
+            "Capture all details:\n"
+            "- Option A | denominator: benefit offerers\n"
+            "- Option B: 42% of respondents"
+        )
+        datapoint = _percentile_datapoint().model_copy(
+            update={"company_prompt": original_prompt}
+        )
+
+        catalog = json.loads(_format_catalog([datapoint]))
+
+        self.assertEqual(len(catalog), 1)
+        self.assertEqual(catalog[0]["comparison_key"], "maternity_maximum")
+        self.assertEqual(catalog[0]["original_glb_prompt"], original_prompt)
 
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from src.models import DatapointEntry
@@ -30,18 +31,18 @@ def _load_system_prompt() -> str:
 
 
 def _format_catalog(datapoints: list[DatapointEntry]) -> str:
-    """Format catalog entries as a markdown table for the LLM."""
-    lines = [
-        "| ComparisonKey | PrettyName | CompanyPrompt | AlignmentLogic | Format |",
-        "|---|---|---|---|---|",
+    """Serialize catalog entries without altering the authoritative GLB prompts."""
+    catalog_rows = [
+        {
+            "comparison_key": dp.comparison_key,
+            "pretty_name": dp.pretty_name,
+            "original_glb_prompt": dp.company_prompt,
+            "alignment_logic": dp.alignment_logic,
+            "format_tag": dp.format_tag,
+        }
+        for dp in datapoints
     ]
-    for dp in datapoints:
-        # Escape pipe characters in company_prompt
-        prompt_escaped = dp.company_prompt.replace("|", "\\|")
-        lines.append(
-            f"| {dp.comparison_key} | {dp.pretty_name} | {prompt_escaped} | {dp.alignment_logic} | {dp.format_tag} |"
-        )
-    return "\n".join(lines)
+    return json.dumps(catalog_rows, ensure_ascii=True, indent=2)
 
 
 def _build_country_context(country: str) -> str:
@@ -81,7 +82,7 @@ def build_topic_messages(
     user_msg = (
         f"### INPUTS\n\n"
         f"**TOPIC:** {topic_name}\n\n"
-        f"**DATA CATALOG:**\n{catalog_text}\n\n"
+        f"**DATA CATALOG (JSON):**\n{catalog_text}\n\n"
         f"**COMPANY SLICE:**\n{company_slice}\n\n"
         f"**INDUSTRY SLICE:**\n{market_slice}"
     )

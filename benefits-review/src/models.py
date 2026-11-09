@@ -86,6 +86,8 @@ class TopicSlice(BaseModel):
     company_slice: str
     market_slice: str
     datapoints: list[DatapointEntry]
+    batch_index: int = 1
+    batch_count: int = 1
 
 
 # --- Output Models ---
@@ -114,6 +116,12 @@ class TopicResult(BaseModel):
     token_usage: int = 0
     processing_time_ms: int = 0
     error: str | None = None
+    initially_missing_keys: list[str] = Field(default_factory=list)
+    recovered_keys: list[str] = Field(default_factory=list)
+    model_omitted_keys: list[str] = Field(default_factory=list)
+    parser_dropped_keys: list[str] = Field(default_factory=list)
+    raw_output_keys: list[str] = Field(default_factory=list)
+    structured_output_detected: bool = False
 
 
 class InvocationResponse(BaseModel):
@@ -162,7 +170,15 @@ class ReportMetadata(BaseModel):
     total_tokens: int = 0
     topics_processed: int = 0
     model: str = ""
+    temperature: float | None = None
+    reasoning_effort: str | None = None
     per_topic_timing: dict[str, int] = Field(default_factory=dict)
+    batches_processed: int = 0
+    initially_omitted_datapoints: int = 0
+    recovered_by_retry: int = 0
+    model_omitted_datapoints: int = 0
+    parser_dropped_datapoints: int = 0
+    missing_before_placeholder_fill: int = 0
     # Deployment traceability
     agent_version: str = ""
     container_tag: str = ""

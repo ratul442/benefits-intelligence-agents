@@ -6,6 +6,8 @@ import re
 
 from src.models import DatapointEntry, TopicSlice
 
+MAX_DATAPOINTS_PER_BATCH = 15
+
 # Canonical topic names used for matching
 TOPICS = [
     "Retirement",
@@ -91,7 +93,8 @@ def slice_payloads(
 ) -> list[TopicSlice]:
     """Partition company/market payloads and catalog entries by benefit topic.
 
-    Returns one TopicSlice per topic that has at least one catalog datapoint.
+    Returns bounded internal batches for each topic that has catalog datapoints.
+    Every batch receives the complete Company and Market sections for its topic.
     """
     company_sections = _split_markdown_by_h2(company_md)
     market_sections = _split_markdown_by_h2(market_md)
@@ -116,13 +119,22 @@ def slice_payloads(
         if not company_slice and not market_slice:
             continue
 
-        slices.append(
-            TopicSlice(
-                topic_name=topic,
-                company_slice=company_slice,
-                market_slice=market_slice,
-                datapoints=datapoints,
+        batch_count = (
+            len(datapoints) + MAX_DATAPOINTS_PER_BATCH - 1
+        ) // MAX_DATAPOINTS_PER_BATCH
+        for batch_index, start in enumerate(
+            range(0, len(datapoints), MAX_DATAPOINTS_PER_BATCH),
+            start=1,
+        ):
+            slices.append(
+                TopicSlice(
+                    topic_name=topic,
+                    company_slice=company_slice,
+                    market_slice=market_slice,
+                    datapoints=datapoints[start:start + MAX_DATAPOINTS_PER_BATCH],
+                    batch_index=batch_index,
+                    batch_count=batch_count,
+                )
             )
-        )
 
     return slices
