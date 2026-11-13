@@ -101,6 +101,8 @@ def _is_company_yes(company_provision: str) -> bool | None:
     val = company_provision.strip().lower()
     if val in ("n/a", "not provided"):
         return None
+    if val in ("not offered", "benefit not offered"):
+        return False
     if val.startswith("yes") or val.startswith("above statutory"):
         return True
     if val == "no" or val == "none" or val == "0":

@@ -3,7 +3,7 @@
 import json
 import unittest
 
-from src.alignment import apply_deterministic_alignment
+from src.alignment import apply_deterministic_alignment, compute_prevalence_alignment
 from src.models import AlignmentRule, DatapointEntry, ReportRow
 from src.prompt_builder import _format_catalog, build_topic_messages
 
@@ -22,7 +22,38 @@ def _percentile_datapoint() -> DatapointEntry:
     )
 
 
+def _prevalence_datapoint() -> DatapointEntry:
+    return DatapointEntry(
+        comparison_key="benefit_prevalence",
+        pretty_name="Prevalence",
+        benefit_topic="Risk Benefits",
+        company_prompt="Determine whether the benefit is offered.",
+        value_type="free_text",
+        alignment=AlignmentRule(
+            logic="Prevalence",
+            basis="yes_no_prevalence",
+        ),
+    )
+
+
 class InterpretationTests(unittest.TestCase):
+    def test_not_offered_uses_negative_prevalence_alignment(self):
+        cases = (
+            ("0% of peers offer benefit", "= Broadly Aligned (0.0%)"),
+            ("66.7% of peers offer benefit", "-- Significantly Below (66.7%)"),
+        )
+
+        for market_practice, expected in cases:
+            with self.subTest(market_practice=market_practice):
+                alignment, error = compute_prevalence_alignment(
+                    "Not offered",
+                    market_practice,
+                    _prevalence_datapoint(),
+                )
+
+                self.assertEqual(alignment, expected)
+                self.assertIsNone(error)
+
     def test_incompatible_bases_preserve_holistic_alignment(self):
         row = ReportRow(
             comparison_key="maternity_maximum",
@@ -114,6 +145,11 @@ class InterpretationTests(unittest.TestCase):
         self.assertIn("Exact market basis", normalized_message)
         self.assertIn("No inferred statistics", normalized_message)
         self.assertIn("no evidence from a different benefit", normalized_message)
+        self.assertIn("Additional comments", normalized_message)
+        self.assertIn("95.8% of organizations with a maximum", normalized_message)
+        self.assertIn("Multiple measures and shared limits", normalized_message)
+        self.assertIn("every affected individual-service summary", normalized_message)
+        self.assertIn("include every measure required", normalized_message)
 
     def test_catalog_json_preserves_original_glb_prompt_exactly(self):
         original_prompt = (

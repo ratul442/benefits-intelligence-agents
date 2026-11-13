@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benefits Review - Customer Feedback Implementation Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 15mm 17mm;
+      @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+        color: #64748b;
+        font: 9px Arial, sans-serif;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { color: #172033; background: #ffffff; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.48;
+    }
+    h1, h2, h3 { margin: 0; color: #11233f; page-break-after: avoid; }
+    h1 { font-size: 27pt; line-height: 1.12; letter-spacing: 0; }
+    h2 {
+      margin-top: 22px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #d5e4e1;
+      font-size: 17pt;
+    }
+    h3 { margin-top: 16px; font-size: 12.5pt; }
+    p { margin: 7px 0; }
+    ul { margin: 7px 0 9px 20px; padding: 0; }
+    li { margin: 4px 0; }
+    strong { color: #10233f; }
+    code {
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: #eef2f6;
+      font: 9.5pt Consolas, monospace;
+    }
+    table {
+      width: 100%;
+      margin: 11px 0 16px;
+      border-collapse: collapse;
+      page-break-inside: auto;
+    }
+    thead { display: table-header-group; }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    th, td {
+      padding: 8px 9px;
+      border: 1px solid #cad4df;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: #ffffff;
+      background: #173d5f;
+      font-weight: 600;
+    }
+    tr:nth-child(even) td { background: #f7f9fb; }
+    .cover {
+      min-height: 250mm;
+      padding: 28mm 10mm 0;
+      page-break-after: always;
+      position: relative;
+    }
+    .cover::before {
+      content: "";
+      display: block;
+      width: 52px;
+      height: 7px;
+      margin-bottom: 26px;
+      background: #16857a;
+    }
+    .eyebrow {
+      margin-bottom: 12px;
+      color: #16857a;
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      max-width: 600px;
+      margin-top: 18px;
+      color: #42526a;
+      font-size: 15pt;
+      line-height: 1.45;
+    }
+    .cover-meta {
+      position: absolute;
+      bottom: 30mm;
+      left: 10mm;
+      right: 10mm;
+      padding-top: 14px;
+      border-top: 1px solid #cad4df;
+      color: #55657a;
+      font-size: 10pt;
+    }
+    .summary {
+      margin: 13px 0 18px;
+      padding: 14px 16px;
+      border-left: 5px solid #16857a;
+      background: #edf7f5;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin: 13px 0 18px;
+    }
+    .metric {
+      min-height: 78px;
+      padding: 10px;
+      border: 1px solid #c9d7d4;
+      background: #f4faf9;
+    }
+    .metric .value {
+      color: #126c65;
+      font-size: 21pt;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .metric .label { margin-top: 5px; color: #536276; font-size: 8.8pt; }
+    .status {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 10px;
+      color: #145a52;
+      background: #d9f0ec;
+      font-size: 8.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .status.open { color: #7a4c00; background: #fff0c7; }
+    .callout {
+      margin: 13px 0;
+      padding: 12px 14px;
+      border: 1px solid #e6ca82;
+      background: #fff9e9;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1fr;
+      align-items: stretch;
+      margin: 14px 0 18px;
+    }
+    .flow .box {
+      padding: 11px 8px;
+      border: 1px solid #b8cad8;
+      background: #f5f8fb;
+      text-align: center;
+      font-size: 9pt;
+      font-weight: 600;
+    }
+    .flow .arrow {
+      align-self: center;
+      color: #16857a;
+      text-align: center;
+      font-size: 17pt;
+    }
+    .page-break { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+    .small { color: #59697c; font-size: 9pt; }
+    .footer-note {
+      margin-top: 22px;
+      padding-top: 8px;
+      border-top: 1px solid #d5dde5;
+      color: #64748b;
+      font-size: 8.5pt;
+    }
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="eyebrow">Benefits Intelligence Agents</div>
+    <h1>Benefits Review<br>Customer Feedback<br>Implementation Report</h1>
+    <p class="subtitle">
+      Summary of the catalog, extraction, batching, model-configuration,
+      validation, and alignment improvements implemented for the Singapore
+      Benefits Review proof of concept.
+    </p>
+    <div class="cover-meta">
+      <strong>Scope:</strong> Singapore Company and Market profiles<br>
+      <strong>Catalog:</strong> GLB Benefit Datapoints Full V1 (Standard), 160 datapoints<br>
+      <strong>Latest evaluated model:</strong> GPT-5.6 Luna, low reasoning<br>
+      <strong>Prepared:</strong> 12 November 2026
+    </div>
+  </section>
+
+  <main>
+    <h2>1. Executive Summary</h2>
+    <div class="summary">
+      The implementation now uses the authoritative GLB V1 catalog one-to-one,
+      processes a maximum of 15 datapoints per model call, retains complete topic
+      evidence in every batch, retries omitted keys, and reports model, parser,
+      and aggregation losses separately. The latest Singapore Luna run returned
+      all 160 requested keys with no missing placeholders and no parser losses.
+    </div>
+
+    <div class="grid">
+      <div class="metric"><div class="value">160/160</div><div class="label">Authoritative GLB V1 keys returned</div></div>
+      <div class="metric"><div class="value">0</div><div class="label">Missing rows after processing</div></div>
+      <div class="metric"><div class="value">15</div><div class="label">Bounded topic batches</div></div>
+      <div class="metric"><div class="value">1/1</div><div class="label">Initially omitted key recovered by retry</div></div>
+    </div>
+
+    <p>
+      The work materially improves catalog fidelity and structural completeness.
+      Factual extraction validation remains the primary acceptance criterion. A
+      known example in the latest run returned an explicit Short-Term Disability
+      market statistic as <code>Not Provided</code>; this is being treated as an
+      extraction-quality issue rather than a missing-key or parsing failure.
+    </p>
+
+    <h2>2. Complete Feedback-to-Implementation Traceability</h2>
+    <p>
+      The table below expands the consolidated themes into the individual
+      feedback items raised across the catalog review and the subsequent
+      three-part extraction, batching, and model review.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Customer feedback</th><th>Implementation completed</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>The previous 160 output rows were not the same 160 datapoints as the original catalog; some appeared split, consolidated, or missing.</td>
+          <td>Converted <code>GLB_Benefit_Datapoints_Full_v1.csv</code> one-to-one into the runtime JSON catalog, preserving all 160 keys, prompts, and source order.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Test both Standard V1 and Simplified V2 with the same inputs and model before selecting a catalog.</td>
+          <td>Standard V1 is converted, deployed, and validated. The same converter/pipeline pattern is ready for V2 after the V1 factual baseline is established.</td>
+          <td><span class="status open">V2 pending</span></td>
+        </tr>
+        <tr>
+          <td>Prioritize Company Provision and Market Practice accuracy over alignment agreement.</td>
+          <td>Changed the system instructions so extraction accuracy and completeness explicitly take priority over alignment.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Use the golden dataset as a factual reference, not as an exact-wording or text-similarity target.</td>
+          <td>Defined factual evaluation around benefit characteristics, values, populations, denominators, and source support. Text similarity is not treated as the acceptance metric.</td>
+          <td><span class="status open">Scoring in progress</span></td>
+        </tr>
+        <tr>
+          <td>Prevent omissions of important benefit details.</td>
+          <td>Added a prompt-completeness check requiring every supported characteristic requested by the original GLB prompt, including formula, limit, eligibility, frequency, duration, conditions, and subgroup variations.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Prevent incorrect market statistics or denominator/population basis.</td>
+          <td>Added exact-market-basis rules that preserve each statistic with its option, population, and denominator and prohibit inferred, combined, rounded, reversed, or invented statistics.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Prevent evidence from related benefits being assigned to the wrong datapoint.</td>
+          <td>Added independent datapoint scope and nearby-evidence checks covering benefit name, characteristic, population, unit, and period before evidence can be assigned.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Make better use of the existing datapoint prompts.</td>
+          <td>Every original GLB prompt is retained exactly and sent as structured JSON, avoiding corruption from multiline text or pipe characters.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Limit each LLM call to a maximum of 15 datapoints, especially for dense Healthcare content.</td>
+          <td>Added a hard 15-datapoint batch limit. Healthcare's 47 datapoints are processed as <code>15 + 15 + 15 + 2</code>.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Confirm every Healthcare batch receives the complete and correct Company and Market sections.</td>
+          <td>Every internal batch reuses the complete relevant Company and Market topic slices; only the datapoint subset changes.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Retry model-omitted records before creating placeholders.</td>
+          <td>Each batch compares requested and returned keys, then retries only omitted datapoints once with the same complete topic evidence.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Determine whether records were omitted by the model or lost during response processing.</td>
+          <td>Added diagnostics for raw structured keys, model omissions, parser-dropped keys, retry recovery, and keys missing after aggregation but before placeholder fill.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>GPT-5 reasoning models do not support temperature; omit it and configure reasoning effort instead.</td>
+          <td>GPT-5/Luna/Terra requests omit <code>temperature</code> and <code>top_p</code> and send reasoning effort. The latest Luna deployment used <code>low</code>.</td>
+          <td><span class="status">Implemented</span></td>
+        </tr>
+        <tr>
+          <td>Establish a GPT-4.1 baseline with smaller batches and test temperature 0 versus 0.2.</td>
+          <td>GPT-4.1 retains configurable sampling parameters and can run through the identical updated pipeline. Controlled baseline runs remain to be completed.</td>
+          <td><span class="status open">Ready to test</span></td>
+        </tr>
+        <tr>
+          <td>Assess consistency when experimenting with a higher GPT-4.1 temperature.</td>
+          <td>The comparison plan includes repeated runs and separate measures for factual accuracy, consistency, omissions, denominator errors, and wrong-benefit attribution.</td>
+          <td><span class="status open">Planned</span></td>
+        </tr>
+        <tr>
+          <td>Run the same inputs, datapoints, and prompts through Luna and Terra at reasoning none/low.</td>
+          <td>Luna low has completed an end-to-end run. Terra was not present in the Foundry deployment inventory, and additional reasoning configurations remain pending.</td>
+          <td><span class="status open">Partially complete</span></td>
+        </tr>
+        <tr>
+          <td>Compare actual extraction quality, consistency, and performance to determine whether model choice is material.</td>
+          <td>The pipeline now captures complete result metadata and token usage, but a controlled model-only comparison against factual golden scoring is still required.</td>
+          <td><span class="status open">In progress</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="page-break">3. Catalog Fidelity</h2>
+    <h3>Problem identified</h3>
+    <p>
+      The original runtime catalog also contained 160 rows, but those rows did
+      not match the customer's authoritative 160 GLB keys. Equal row counts had
+      obscured splitting, consolidation, and taxonomy differences.
+    </p>
+
+    <h3>Implementation</h3>
+    <ul>
+      <li>The Standard V1 CSV is converted one-to-one; rows are not split or consolidated.</li>
+      <li><code>ComparisonKey</code>, prompt text, sort order, topic, benefit type, and source metadata are retained.</li>
+      <li>The converter rejects blank or duplicate keys and enforces the expected count of 160.</li>
+      <li>The deployed image identifies the catalog as <code>glb-v1-standard-2026-07-31</code>.</li>
+      <li>The original GLB prompts are serialized as JSON, preventing multiline text and pipe characters from corrupting prompt boundaries.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Verified deployment signal:</strong> the latest result begins with
+      <code>risk_benefits_life_insurance_benefit_offered</code>, rather than an
+      old custom key such as <code>ret_prev</code>.
+    </div>
+
+    <h2>4. Extraction Accuracy Improvements</h2>
+    <p>The system prompt now makes extraction accuracy and completeness higher priority than alignment. It requires the model to:</p>
+    <ul>
+      <li>treat every comparison key as an independent extraction task;</li>
+      <li>use only evidence applicable to the current benefit, population, option, unit, and period;</li>
+      <li>include all requested, supported characteristics rather than stopping at the first matching fact;</li>
+      <li>preserve market values together with their option, population, and denominator basis;</li>
+      <li>avoid calculating, reversing, rounding, combining, or inventing statistics; and</li>
+      <li>audit each result against its original GLB prompt before returning structured JSON.</li>
+    </ul>
+
+    <h3>Singapore interpretation layer</h3>
+    <p>
+      Country context is added dynamically for <code>SGP</code>. It recognizes
+      equivalent local structures and terminology, including CPF, statutory
+      versus supplementary benefits, and SGD limits, while explicitly prohibiting
+      inference from general country knowledge when the supplied profiles do not
+      contain evidence.
+    </p>
+
+    <h2>5. Batching, Parallelism, and Retry</h2>
+    <div class="flow">
+      <div class="box">Split profiles by canonical topic</div><div class="arrow">&#8594;</div>
+      <div class="box">Group catalog keys by topic</div><div class="arrow">&#8594;</div>
+      <div class="box">Create batches of up to 15 keys</div><div class="arrow">&#8594;</div>
+      <div class="box">Run with bounded concurrency</div>
+    </div>
+    <p>
+      Company and Market are not processed in separate calls. Each model call
+      receives both the complete Company topic section and the complete Market
+      topic section, together with up to 15 datapoint definitions. For example,
+      47 Healthcare datapoints are divided into <code>15 + 15 + 15 + 2</code>,
+      with the same complete Healthcare evidence supplied to every batch.
+    </p>
+    <p>
+      Batches execute in parallel under a semaphore to limit concurrency. After
+      each response, requested keys are compared with raw structured output and
+      parsed rows. Missing keys are retried once with the same full topic evidence
+      and only the omitted datapoint definitions. Results are then deduplicated,
+      validated, and restored to authoritative catalog order.
+    </p>
+
+    <h2 class="page-break">6. Alignment and Validation Improvements</h2>
+    <ul>
+      <li>Deterministic prevalence and percentile rules validate straightforward, like-for-like measures.</li>
+      <li>Comparability checks prevent direct numeric comparison across incompatible bases, such as annual versus per-birth limits.</li>
+      <li>Compound or qualitative provisions use evidence-grounded holistic alignment rather than the first number found.</li>
+      <li>Valid qualitative values such as unlimited or no overall maximum are not treated as numeric extraction failures.</li>
+      <li>Currency parsing recognizes SGD/S$ and HKD/HK$ forms.</li>
+      <li>Parent-child dependency rules, output formatting, and authoritative source ordering are enforced after aggregation.</li>
+    </ul>
+
+    <h3>Explicit negative normalization</h3>
+    <p>
+      A post-run review found that <code>Not offered</code> had been treated as an
+      affirmative substantive value. The normalization was corrected and regression
+      tested. Expected outcomes now include:
+    </p>
+    <table>
+      <thead><tr><th>Company</th><th>Market</th><th>Correct alignment</th></tr></thead>
+      <tbody>
+        <tr><td>Not offered</td><td>0% of peers offer benefit</td><td>= Broadly Aligned (0.0%)</td></tr>
+        <tr><td>Not offered</td><td>66.7% of peers offer benefit</td><td>-- Significantly Below (66.7%)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. Model Configuration</h2>
+    <table>
+      <thead><tr><th>Model family</th><th>Request configuration</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>GPT-5 / Luna / Terra</td><td>Reasoning effort; no temperature or top-p</td><td>Avoid unsupported-parameter failures and support reasoning-model evaluation.</td></tr>
+        <tr><td>GPT-4.1</td><td>Temperature and optional top-p retained</td><td>Enable controlled tests at temperature 0 and 0.2.</td></tr>
+      </tbody>
+    </table>
+    <p>
+      The latest evaluated deployment used GPT-5.6 Luna with reasoning effort
+      <code>low</code>. Terra was not available in the Foundry deployment inventory
+      at the time of testing.
+    </p>
+
+    <h2>8. Latest Singapore Run</h2>
+    <table>
+      <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Catalog</td><td>GLB V1 Standard, 160 authoritative keys</td></tr>
+        <tr><td>Model</td><td>GPT-5.6 Luna, low reasoning</td></tr>
+        <tr><td>Rows returned</td><td>160</td></tr>
+        <tr><td>Passed / corrected / review</td><td>124 / 14 / 22</td></tr>
+        <tr><td>Missing / failed</td><td>0 / 0</td></tr>
+        <tr><td>Customer-safe / review-required</td><td>138 / 22</td></tr>
+        <tr><td>Internal batches</td><td>15</td></tr>
+        <tr><td>Initially omitted / recovered</td><td>1 / 1</td></tr>
+        <tr><td>Parser-dropped keys</td><td>0</td></tr>
+        <tr><td>Missing before placeholder fill</td><td>0</td></tr>
+        <tr><td>Aggregate API-reported tokens</td><td>232,367 across initial and retry calls</td></tr>
+      </tbody>
+    </table>
+    <p class="small">
+      Token usage is the sum of <code>response.usage.total_tokens</code> reported
+      by the model API for all calls. It is not, by itself, an Azure cost figure;
+      billing analysis requires the applicable deployment pricing and token categories.
+    </p>
+
+    <h2 class="page-break">9. Comparison With the Earlier GPT-4.1 Run</h2>
+    <table>
+      <thead><tr><th>Measure</th><th>Earlier GPT-4.1 run</th><th>Latest Luna run</th></tr></thead>
+      <tbody>
+        <tr><td>Authoritative GLB keys represented</td><td>160</td><td>160</td></tr>
+        <tr><td>Missing placeholders</td><td>24, all Healthcare</td><td>0</td></tr>
+        <tr><td>Bounded 15-key batching</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Omitted-key retry</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Model/parser/aggregation diagnostics</td><td>Limited</td><td>Explicit</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <strong>Interpretation:</strong> Luna shows better completeness than the
+      earlier GPT-4.1 run, but this is not a controlled model-only comparison.
+      The Luna run also benefited from batching, retries, lossless catalog JSON,
+      and stronger extraction instructions. Factual superiority has not yet been established.
+    </div>
+
+    <h2>10. Known Limitation</h2>
+    <p>
+      Structural completeness does not guarantee factual correctness. In the
+      latest run, the datapoint
+      <code>risk_benefits_disability_short_term_std_including_sick_leave_prevalence</code>
+      was returned with Market Practice <code>Not Provided</code>, although the
+      Risk Benefits section explicitly states Short-Term Disability prevalence
+      of 0.0%. Because the key was present, omitted-key retry did not activate.
+    </p>
+    <p>
+      This result is valid as a progress build and as evidence that missing-key
+      handling works. It is not yet a final factual-accuracy benchmark.
+    </p>
+
+    <h2>11. Verification Completed</h2>
+    <ul>
+      <li>VM validation suite: 12 tests passed.</li>
+      <li>Expanded local suite, including explicit negative regression coverage: 13 tests passed.</li>
+      <li>Container validation confirmed the GLB V1 catalog, 160 unique keys, and corrected negative normalization.</li>
+      <li>Foundry deployment completed successfully with the immutable corrected image.</li>
+      <li>End-to-end invocation completed with all 160 rows and no parser or placeholder losses.</li>
+    </ul>
+
+    <h2>12. Recommended Next Steps</h2>
+    <ol>
+      <li>Add evidence-aware retry for semantically incomplete values such as <code>Not Provided</code>, while preventing unsupported replacement.</li>
+      <li>Score Company and Market extraction against the golden dataset by fact, characteristic, statistic, population, and denominator, not wording similarity.</li>
+      <li>Run GPT-4.1 at temperature 0 and 0.2 through the identical updated pipeline.</li>
+      <li>Repeat selected Luna and GPT-4.1 runs to measure consistency.</li>
+      <li>Evaluate Terra on a representative subset when a deployment is available, then expand only if quality justifies cost and latency.</li>
+      <li>Generate and test the Simplified V2 catalog using the same inputs and model after the V1 factual baseline is established.</li>
+    </ol>
+
+    <div class="footer-note">
+      This report summarizes implementation and validation completed for the
+      Singapore Benefits Review proof of concept. Alignment metrics should be
+      interpreted only after factual Company and Market extraction has been validated.
+    </div>
+  </main>
+</body>
+</html>

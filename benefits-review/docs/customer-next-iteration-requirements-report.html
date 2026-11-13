@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benefits Review - Next Iteration Requirements Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 15mm;
+      @bottom-right { content: "Page " counter(page) " of " counter(pages); color: #64748b; font: 9px Arial, sans-serif; }
+    }
+    * { box-sizing: border-box; }
+    html { color: #172033; background: #fff; }
+    body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; font-size: 10.3pt; line-height: 1.45; }
+    h1, h2, h3 { margin: 0; color: #11233f; page-break-after: avoid; }
+    h1 { font-size: 27pt; line-height: 1.12; }
+    h2 { margin-top: 21px; padding-bottom: 6px; border-bottom: 2px solid #d5e4e1; font-size: 16.5pt; }
+    h3 { margin-top: 15px; font-size: 12.5pt; }
+    p { margin: 7px 0; }
+    ul, ol { margin: 7px 0 10px 21px; padding: 0; }
+    li { margin: 4px 0; }
+    strong { color: #10233f; }
+    code { padding: 1px 4px; border-radius: 3px; background: #eef2f6; font: 9.3pt Consolas, monospace; }
+    table { width: 100%; margin: 10px 0 16px; border-collapse: collapse; page-break-inside: auto; }
+    thead { display: table-header-group; }
+    tr { page-break-inside: avoid; }
+    th, td { padding: 7px 8px; border: 1px solid #cad4df; text-align: left; vertical-align: top; }
+    th { color: #fff; background: #173d5f; font-weight: 600; }
+    tr:nth-child(even) td { background: #f7f9fb; }
+    .cover { min-height: 250mm; padding: 28mm 10mm 0; position: relative; page-break-after: always; }
+    .cover::before { content: ""; display: block; width: 52px; height: 7px; margin-bottom: 26px; background: #16857a; }
+    .eyebrow { margin-bottom: 12px; color: #16857a; font-size: 10pt; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+    .subtitle { max-width: 610px; margin-top: 18px; color: #42526a; font-size: 15pt; line-height: 1.45; }
+    .cover-meta { position: absolute; right: 10mm; bottom: 30mm; left: 10mm; padding-top: 14px; border-top: 1px solid #cad4df; color: #55657a; }
+    .summary { margin: 13px 0 18px; padding: 14px 16px; border-left: 5px solid #16857a; background: #edf7f5; }
+    .callout { margin: 13px 0; padding: 12px 14px; border: 1px solid #e6ca82; background: #fff9e9; }
+    .status { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 8.3pt; font-weight: 700; white-space: nowrap; text-transform: uppercase; }
+    .done { color: #145a52; background: #d9f0ec; }
+    .local { color: #174f78; background: #deedf7; }
+    .open { color: #7a4c00; background: #fff0c7; }
+    .page-break { page-break-before: always; }
+    .small { color: #59697c; font-size: 9pt; }
+    .footer-note { margin-top: 22px; padding-top: 8px; border-top: 1px solid #d5dde5; color: #64748b; font-size: 8.5pt; }
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="eyebrow">Benefits Intelligence Agents</div>
+    <h1>Benefits Review<br>Next Iteration<br>Requirements Report</h1>
+    <p class="subtitle">Customer requirements, current implementation status, acceptance criteria, and delivery plan for Singapore factual extraction, model experimentation, and execution performance.</p>
+    <div class="cover-meta">
+      <strong>Scope:</strong> Singapore Company and Market profiles<br>
+      <strong>Catalog:</strong> GLB Benefit Datapoints Full V1 (Standard), 160 datapoints<br>
+      <strong>Current benchmark:</strong> GPT-5.6 Luna, low reasoning<br>
+      <strong>Prepared:</strong> 13 November 2026
+    </div>
+  </section>
+
+  <main>
+    <h2>1. Executive Summary</h2>
+    <div class="summary">
+      The next iteration has three priorities: improve factual extraction against the finalized Singapore golden dataset, compare GPT-5.6 Luna with GPT-5.6 Sol and GPT-5.5 under controlled conditions, and expose a complete execution profile. Factual Company and Market accuracy remains the acceptance gate before further alignment optimization.
+    </div>
+    <p>The existing implementation already enforces a maximum of 15 datapoints per call, repeats complete topic evidence in every batch, retries omitted keys, and returned all 160 authoritative GLB V1 records. The latest customer review identified semantic incompleteness inside returned rows rather than missing keys.</p>
+    <div class="callout"><strong>Release distinction:</strong> prompt <code>2026-11-extraction-accuracy-v3</code> and its regression tests are implemented locally but are not yet deployed. The latest customer-reviewed Luna result came from the previous deployed prompt.</div>
+
+    <h2>2. Requirements Register</h2>
+    <table>
+      <thead><tr><th>Requirement</th><th>Current status</th><th>Required next action</th></tr></thead>
+      <tbody>
+        <tr><td>Maximum 15 datapoints per LLM call</td><td><span class="status done">Deployed</span></td><td>Retain unchanged across all benchmark runs.</td></tr>
+        <tr><td>All 160 authoritative GLB V1 records returned</td><td><span class="status done">Validated</span></td><td>Continue structural regression checks.</td></tr>
+        <tr><td>Complete Company and Market topic context in every batch</td><td><span class="status done">Deployed</span></td><td>Confirm the four findings against exact source evidence.</td></tr>
+        <tr><td>Additional comments and narrative evidence considered</td><td><span class="status local">Local v3</span></td><td>Deploy v3 and rerun Luna.</td></tr>
+        <tr><td>Conditional statistical denominators preserved</td><td><span class="status local">Local v3</span></td><td>Verify Healthcare 95.8% wording.</td></tr>
+        <tr><td>All material measures and shared limits retained</td><td><span class="status local">Local v3</span></td><td>Verify Business Travel and Maternity rows.</td></tr>
+        <tr><td>Semantic completeness audit and retry</td><td><span class="status open">Not implemented</span></td><td>Add only if the v3 Luna baseline remains incomplete.</td></tr>
+        <tr><td>Controlled Luna, Sol, and GPT-5.5 comparison</td><td><span class="status open">Not started</span></td><td>Run identical, repeated benchmark executions.</td></tr>
+        <tr><td>Per-batch and pipeline-phase telemetry</td><td><span class="status open">Not implemented</span></td><td>Instrument before the model benchmark.</td></tr>
+        <tr><td>Progressive availability of usable results</td><td><span class="status open">Not implemented</span></td><td>Measure current behavior, then decide whether row/batch streaming is required.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="page-break">3. Workstream 1: Factual Extraction Accuracy</h2>
+    <h3>Customer findings</h3>
+    <table>
+      <thead><tr><th>Area</th><th>Observed issue</th><th>Acceptance criterion</th></tr></thead>
+      <tbody>
+        <tr><td>EAP</td><td>Childcare assistance, medical advice, and training returned <code>Not Provided</code> despite Wellbeing evidence.</td><td>Each affected row contains the correct source-supported detail and is assigned to the correct datapoint.</td></tr>
+        <tr><td>Healthcare</td><td>Hospitalization maximum statistic was presented as applying to all peers.</td><td>The result states that 95.8% applies to organizations with a maximum.</td></tr>
+        <tr><td>Business Travel</td><td>Summary omitted the Company S$10M out-of-country medical maximum and Market S$300K median accidental-death benefit.</td><td>Both measures appear with the correct party, benefit, unit, and basis.</td></tr>
+        <tr><td>Maternity</td><td>Individual service summaries omitted the shared Company S$5,000 annual maximum.</td><td>Every affected individual-service row includes the shared annual maximum without applying it outside its source scope.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Diagnosis</h3>
+    <ul>
+      <li>Topic slicing is unlikely to be the primary cause because each batch receives the complete relevant Company and Market topic sections.</li>
+      <li>Structured parsing copies returned Company and Market strings and did not report dropped keys.</li>
+      <li>Existing retry handles absent keys only; it does not detect a present row with an incomplete value.</li>
+      <li>The strongest identified cause is model interpretation combined with earlier prompt competition: additional comments were de-prioritized, F4 encouraged compression, and shared or multiple measures were not explicit enough.</li>
+    </ul>
+
+    <h3>Implementation and verification</h3>
+    <ol>
+      <li>Deploy prompt v3 with rules for additional comments, exact conditional denominators, multiple measures, shared limits, and concise-but-complete F4 output.</li>
+      <li>Rerun GPT-5.6 Luna at low reasoning using the identical source files, catalog, batches, and concurrency.</li>
+      <li>Compare all 160 rows against the finalized golden dataset by fact and source support, not text similarity.</li>
+      <li>Classify the four known examples as Passed, Partially passed, or Failed, recording source evidence, golden value, and actual value.</li>
+      <li>Repeat the stable configuration at least three times to assess consistency.</li>
+    </ol>
+
+    <h3>Conditional semantic audit</h3>
+    <p>If v3 remains incomplete, introduce a targeted verification pass for complex or suspicious rows. The audit must receive the original datapoint prompt, full topic evidence, and initial value; return changes only when explicit evidence supports them; preserve the initial value otherwise; and report audited rows, recovered facts, tokens, and latency separately. It must not blindly retry every <code>Not Provided</code> value.</p>
+
+    <h2>4. Workstream 2: Controlled Model Experimentation</h2>
+    <p>The customer requested a direct comparison of the current Luna baseline with Sol and potentially GPT-5.5. These deployments are currently available and in a succeeded state.</p>
+    <table>
+      <thead><tr><th>Candidate</th><th>Initial configuration</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>GPT-5.6 Luna</td><td>Low reasoning</td><td>Current baseline</td></tr>
+        <tr><td>GPT-5.6 Sol</td><td>Same supported reasoning configuration</td><td>Primary comparison</td></tr>
+        <tr><td>GPT-5.5</td><td>Same supported reasoning configuration</td><td>Secondary comparison</td></tr>
+      </tbody>
+    </table>
+    <p>Every model run must use the same Company profile, Market profile, GLB V1 catalog and order, prompt version, 15 batch definitions, concurrency limit, code/container version, and validation rules. Reasoning effort is a separate experimental variable and must not be changed inside a model-only comparison.</p>
+    <h3>Measures</h3>
+    <ul>
+      <li>Factual accuracy and prompt-level completeness against the golden dataset</li>
+      <li>Consistency across at least three repeated runs</li>
+      <li>Wrong-benefit attribution, denominator errors, and unsupported facts</li>
+      <li>Total wall-clock time, per-batch model time, queue time, and retry time</li>
+      <li>Input, output, reasoning, and total tokens</li>
+      <li>Estimated cost using the applicable deployment pricing</li>
+    </ul>
+    <p class="small">The shared deployment inventory represents models currently deployed in the environment. Other models may be deployable subject to Azure regional availability, quota, access, and WTW approval.</p>
+
+    <h2 class="page-break">5. Workstream 3: Execution Performance and Parallelism</h2>
+    <h3>Current behavior</h3>
+    <ul>
+      <li>All 15 batch tasks are scheduled together.</li>
+      <li>An application semaphore permits at most nine active batch tasks, so 15 batches require at least two scheduling waves.</li>
+      <li>An omitted-key retry occurs inside the same bounded task and continues to occupy its concurrency slot.</li>
+      <li><code>processing_time_ms</code> is application wall-clock time from before slicing through final aggregation.</li>
+      <li>Current per-topic timing is the sum of batch durations for that topic. Concurrent durations overlap and must not be added to derive wall-clock time.</li>
+      <li>The SSE endpoint sends an immediate status event, but usable rows and topic-complete events are emitted only after the full pipeline returns.</li>
+    </ul>
+    <div class="callout"><strong>Interpretation of 36+ seconds:</strong> this is the current end-to-end application duration, not the sum of individual batch times. The customer's theoretical 12-second lower bound assumes all 15 calls execute concurrently without Azure-side queuing; the current application cap is nine.</div>
+
+    <h3>Required telemetry</h3>
+    <table>
+      <thead><tr><th>Level</th><th>Required measurements</th></tr></thead>
+      <tbody>
+        <tr><td>Batch</td><td>Topic, batch index/count, queued/start/end timestamps, attempt number, retry reason, model duration, parse duration, validation duration, and outcome.</td></tr>
+        <tr><td>Tokens</td><td>Input, output, reasoning where exposed, and total tokens for every attempt.</td></tr>
+        <tr><td>Concurrency</td><td>Active request count at start/end, observed peak concurrency, semaphore wait time, throttling, and retry-after information.</td></tr>
+        <tr><td>Pipeline</td><td>Slicing, LLM wall time, parsing, factual validation, deterministic alignment, aggregation, serialization, and total duration.</td></tr>
+        <tr><td>Availability</td><td>Time to first status, first completed batch, first usable result, and complete 160-row result.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Acceptance criteria</h3>
+    <ul>
+      <li>Batch timestamps demonstrate actual overlap and measured peak concurrency.</li>
+      <li>Phase durations reconcile with total wall-clock time within a documented tolerance.</li>
+      <li>Initial calls and retries are independently identifiable.</li>
+      <li>Token totals reconcile with the invocation-level total.</li>
+      <li>Azure throttling or queuing is reported as evidence, not inferred from latency alone.</li>
+      <li>Model comparison reports use the same telemetry schema.</li>
+    </ul>
+
+    <h2>6. Delivery Sequence</h2>
+    <table>
+      <thead><tr><th>Phase</th><th>Activities</th><th>Exit condition</th></tr></thead>
+      <tbody>
+        <tr><td>1. V3 baseline</td><td>Build, deploy, invoke Luna, and verify metadata and all 160 rows.</td><td>Four known findings scored against source and golden evidence.</td></tr>
+        <tr><td>2. Instrumentation</td><td>Add batch, token, concurrency, phase, retry, and availability telemetry.</td><td>One Luna run produces a reconciled execution profile.</td></tr>
+        <tr><td>3. Semantic audit decision</td><td>Review v3 failures and implement targeted audit only if needed.</td><td>No unresolved known issue without a recorded reason or review flag.</td></tr>
+        <tr><td>4. Model benchmark</td><td>Run Luna, Sol, and GPT-5.5 at least three times under controlled conditions.</td><td>Comparable quality, consistency, performance, token, and cost matrix.</td></tr>
+        <tr><td>5. Recommendation</td><td>Select the preferred model/configuration and document trade-offs.</td><td>Customer-ready recommendation supported by reproducible evidence.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. Required Inputs and Deliverables</h2>
+    <h3>Inputs</h3>
+    <ul>
+      <li>Singapore Company profile and Market profile used for the customer-reviewed run</li>
+      <li>Finalized Singapore golden dataset</li>
+      <li>Authoritative GLB V1 runtime catalog</li>
+      <li>Latest customer-reviewed result JSON and new v3 result JSON</li>
+      <li>Applicable Azure model pricing and any quota or throughput constraints</li>
+    </ul>
+    <h3>Deliverables</h3>
+    <ul>
+      <li>Four-finding factual verification record and complete 160-row scoring output</li>
+      <li>Detailed execution profile with batch and phase telemetry</li>
+      <li>Controlled Luna/Sol/GPT-5.5 benchmark matrix</li>
+      <li>Recommended production model and reasoning configuration</li>
+      <li>Known limitations, residual review items, and deployment traceability</li>
+    </ul>
+
+    <h2>8. Definition of Done</h2>
+    <p>The iteration is complete when the selected configuration returns all 160 authoritative rows; satisfies the agreed factual accuracy and completeness threshold; resolves or explicitly flags the four known findings; produces reproducible timing, token, retry, and concurrency evidence; and has been compared fairly across the selected models. Alignment optimization should resume only after this factual gate is accepted.</p>
+
+    <div class="footer-note">This document defines the next iteration requirements and does not claim that locally implemented prompt v3 changes, semantic auditing, detailed telemetry, or controlled model benchmarks are already deployed or complete.</div>
+  </main>
+</body>
+</html>
