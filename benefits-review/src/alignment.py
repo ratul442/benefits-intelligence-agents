@@ -395,6 +395,15 @@ def apply_deterministic_alignment(
     6. Set alignment_source and validation_status
     """
     catalog_lookup = {dp.comparison_key: dp for dp in catalog}
+    semantic_review_reasons = {
+        row.comparison_key: row.review_reason_code
+        for row in rows
+        if row.review_reason_code in {
+            "SEMANTIC_AUDIT_REVIEW",
+            "UNSUPPORTED_SEMANTIC_CORRECTION",
+            "INCOMPLETE_SEMANTIC_AUDIT_CHECKLIST",
+        }
+    }
 
     # Build parent provision lookup for dependency validation
     row_lookup: dict[str, ReportRow] = {row.comparison_key: row for row in rows}
@@ -554,6 +563,13 @@ def apply_deterministic_alignment(
             row.validation_status = "review"
             row.customer_safe = False
             row.review_reason_code = "PARENT_CHILD_CONTRADICTION"
+
+    for row in rows:
+        semantic_reason = semantic_review_reasons.get(row.comparison_key)
+        if semantic_reason:
+            row.validation_status = "review"
+            row.customer_safe = False
+            row.review_reason_code = semantic_reason
 
     return rows
 

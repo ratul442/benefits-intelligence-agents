@@ -217,7 +217,7 @@ if (!$Token) { throw "Unable to obtain Azure token" }
 GPT-5 models must not receive `temperature` or `top_p`.
 
 ```powershell
-$DeploymentBody = @{ name="benefits-review"; definition=@{ kind="hosted"; image=$ImageDigest; cpu="1"; memory="2Gi"; container_protocol_versions=@(@{ protocol="invocations"; version="1.0.0" }); environment_variables=@{ AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.6-luna"; LLM_REASONING_EFFORT="low"; ENABLE_SEMANTIC_AUDIT="true"; SEMANTIC_AUDIT_MODEL="gpt-5.6-luna"; SEMANTIC_AUDIT_MAX_TOKENS="16384"; CONTAINER_TAG=$Tag; PROMPT_VERSION="2026-11-extraction-accuracy-v4" } } } | ConvertTo-Json -Depth 10
+$DeploymentBody = @{ name="benefits-review"; definition=@{ kind="hosted"; image=$ImageDigest; cpu="1"; memory="2Gi"; container_protocol_versions=@(@{ protocol="invocations"; version="1.0.0" }); environment_variables=@{ AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.6-luna"; LLM_REASONING_EFFORT="low"; ENABLE_SEMANTIC_AUDIT="true"; SEMANTIC_AUDIT_MODEL="gpt-5.6-sol"; SEMANTIC_AUDIT_MAX_TOKENS="16384"; CONTAINER_TAG=$Tag; PROMPT_VERSION="2026-11-extraction-accuracy-v4.1" } } } | ConvertTo-Json -Depth 10
 ```
 
 ```powershell

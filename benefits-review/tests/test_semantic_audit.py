@@ -2,8 +2,19 @@
 
 import unittest
 
-from src.models import ReportRow
+from src.alignment import apply_deterministic_alignment
+from src.models import DatapointEntry, ReportRow
 from src.semantic_audit import apply_semantic_audits
+
+
+_COMPLETED_CHECKS = [
+    "company_prompt_complete",
+    "market_prompt_complete",
+    "additional_comments_checked",
+    "conditional_denominators_checked",
+    "multiple_measures_checked",
+    "shared_limits_checked",
+]
 
 
 def _row(key: str, company: str = "Initial company", market: str = "Initial market"):
@@ -29,6 +40,7 @@ class SemanticAuditTests(unittest.TestCase):
             "missing_facts": ["company medical maximum", "market death benefit"],
             "company_evidence_quotes": [company_evidence],
             "market_evidence_quotes": [market_evidence],
+            "completed_checks": _COMPLETED_CHECKS,
         }]
 
         result = apply_semantic_audits(
@@ -51,6 +63,7 @@ class SemanticAuditTests(unittest.TestCase):
             "missing_facts": ["denominator"],
             "company_evidence_quotes": [],
             "market_evidence_quotes": ["This quotation is absent"],
+            "completed_checks": _COMPLETED_CHECKS,
         }]
 
         result = apply_semantic_audits(
@@ -81,12 +94,53 @@ class SemanticAuditTests(unittest.TestCase):
             "missing_facts": ["shared annual maximum"],
             "company_evidence_quotes": [company_evidence],
             "market_evidence_quotes": [],
+            "completed_checks": _COMPLETED_CHECKS,
         }]
 
         result = apply_semantic_audits(rows, audits, company_evidence, "")
 
         self.assertIn("S$5,000", result.rows[0].company_provision)
         self.assertEqual(result.rows[0].validation_status, "corrected")
+
+    def test_incomplete_checklist_fails_closed_to_review(self):
+        rows = [_row("healthcare")]
+        audits = [{
+            "comparison_key": "healthcare",
+            "status": "complete",
+            "company_provision": "Initial company",
+            "market_practice": "Initial market",
+            "missing_facts": [],
+            "company_evidence_quotes": [],
+            "market_evidence_quotes": [],
+            "completed_checks": ["company_prompt_complete"],
+        }]
+
+        result = apply_semantic_audits(rows, audits, "", "")
+
+        self.assertEqual(result.rows[0].validation_status, "review")
+        self.assertFalse(result.rows[0].customer_safe)
+        self.assertEqual(
+            result.rows[0].review_reason_code,
+            "INCOMPLETE_SEMANTIC_AUDIT_CHECKLIST",
+        )
+
+    def test_semantic_review_status_survives_deterministic_alignment(self):
+        row = _row("prevalence", "Not offered", "66.7% of peers offer benefit")
+        row.validation_status = "review"
+        row.customer_safe = False
+        row.review_reason_code = "SEMANTIC_AUDIT_REVIEW"
+        catalog = [DatapointEntry(
+            comparison_key="prevalence",
+            pretty_name="Prevalence",
+            benefit_topic="Risk Benefits",
+            company_prompt="State prevalence.",
+        )]
+
+        aligned = apply_deterministic_alignment([row], catalog)
+
+        self.assertEqual(aligned[0].validation_status, "review")
+        self.assertFalse(aligned[0].customer_safe)
+        self.assertEqual(aligned[0].review_reason_code, "SEMANTIC_AUDIT_REVIEW")
 
 
 if __name__ == "__main__":

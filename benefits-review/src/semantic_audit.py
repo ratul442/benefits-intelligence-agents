@@ -10,6 +10,16 @@ from dataclasses import dataclass
 from src.models import ReportRow, TopicSlice
 
 
+_REQUIRED_CHECKS = {
+    "company_prompt_complete",
+    "market_prompt_complete",
+    "additional_comments_checked",
+    "conditional_denominators_checked",
+    "multiple_measures_checked",
+    "shared_limits_checked",
+}
+
+
 _AUDIT_SCHEMA = {
     "type": "json_schema",
     "name": "benefits_review_semantic_audit",
@@ -41,6 +51,13 @@ _AUDIT_SCHEMA = {
                             "type": "array",
                             "items": {"type": "string"},
                         },
+                        "completed_checks": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": sorted(_REQUIRED_CHECKS),
+                            },
+                        },
                     },
                     "required": [
                         "comparison_key",
@@ -50,6 +67,7 @@ _AUDIT_SCHEMA = {
                         "missing_facts",
                         "company_evidence_quotes",
                         "market_evidence_quotes",
+                        "completed_checks",
                     ],
                     "additionalProperties": False,
                 },
@@ -63,6 +81,7 @@ _AUDIT_SCHEMA = {
 _AUDIT_INSTRUCTIONS = """You verify factual completeness of benefits-review extraction rows.
 For every supplied datapoint, compare the initial values with its original prompt and the complete Company and Market topic evidence.
 Check additional comments, narrative text, conditional denominators, every material measure, and shared limits that apply to individual service rows.
+For every row, return each of these completed_checks exactly once after checking it: company_prompt_complete, market_prompt_complete, additional_comments_checked, conditional_denominators_checked, multiple_measures_checked, shared_limits_checked.
 Use status complete when the row is already complete. Use corrected only when the supplied evidence explicitly supports a corrected value. Use needs_review when evidence is ambiguous.
 For every changed Company or Market value, provide one or more exact verbatim evidence quotations from the corresponding supplied evidence. Do not infer, calculate, use outside knowledge, or produce alignment.
 """
@@ -110,6 +129,17 @@ def apply_semantic_audits(
         if row is None:
             continue
         status = audit.get("status")
+        completed_checks = set(audit.get("completed_checks", []))
+        if completed_checks != _REQUIRED_CHECKS:
+            incomplete += 1
+            row.validation_status = "review"
+            row.customer_safe = False
+            row.review_reason_code = "INCOMPLETE_SEMANTIC_AUDIT_CHECKLIST"
+            row.validation_errors.append(
+                "Semantic audit did not complete every required factual check"
+            )
+            review_required += 1
+            continue
         if status == "complete":
             continue
         incomplete += 1

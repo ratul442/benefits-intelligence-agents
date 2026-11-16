@@ -59,7 +59,7 @@ class Settings(BaseSettings):
             )
         if not self.prompt_version:
             self.prompt_version = os.environ.get(
-                "PROMPT_VERSION", "2026-11-extraction-accuracy-v4"
+                "PROMPT_VERSION", "2026-11-extraction-accuracy-v4.1"
             )
 
 
