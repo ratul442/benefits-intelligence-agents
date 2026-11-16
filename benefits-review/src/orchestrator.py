@@ -20,6 +20,7 @@ from src.models import (
 )
 from src.output_parser import count_valid_rows, parse_llm_output
 from src.prompt_builder import build_topic_messages
+from src.semantic_audit import audit_topic_rows
 from src.topic_slicer import slice_payloads
 from src.validators import validate_rows
 from src.alignment import (
@@ -198,10 +199,29 @@ async def _process_single_topic(
             still_missing,
         )
 
+    audit_result = None
+    if settings.enable_semantic_audit and combined_rows:
+        audit_model = settings.semantic_audit_model or model
+        audit_result = await audit_topic_rows(
+            client,
+            topic_slice,
+            combined_rows,
+            audit_model,
+            _model_request_parameters(audit_model),
+            settings.semantic_audit_max_tokens,
+        )
+        combined_rows = audit_result.rows
+        if audit_result.error:
+            logger.error("Semantic audit failed for %s: %s", topic_name, audit_result.error)
+
     return TopicResult(
         topic_name=topic_name,
         rows=combined_rows,
-        token_usage=initial_result.token_usage + retry_tokens,
+        token_usage=(
+            initial_result.token_usage
+            + retry_tokens
+            + (audit_result.token_usage if audit_result else 0)
+        ),
         processing_time_ms=int((time.perf_counter() - start) * 1000),
         error=retry_error,
         initially_missing_keys=initially_missing_keys,
@@ -212,6 +232,13 @@ async def _process_single_topic(
         )),
         raw_output_keys=initial_result.raw_output_keys,
         structured_output_detected=initial_result.structured_output_detected,
+        semantically_audited_rows=audit_result.audited_rows if audit_result else 0,
+        semantically_incomplete_rows=audit_result.incomplete_rows if audit_result else 0,
+        facts_recovered_by_audit=audit_result.recovered_facts if audit_result else 0,
+        unsupported_audit_corrections=(audit_result.unsupported_corrections if audit_result else 0),
+        semantic_review_required=audit_result.review_required if audit_result else 0,
+        semantic_audit_tokens=audit_result.token_usage if audit_result else 0,
+        semantic_audit_time_ms=audit_result.processing_time_ms if audit_result else 0,
     )
 
 
@@ -480,6 +507,13 @@ async def run_benefits_review(
                 len(result.parser_dropped_keys) for result in results
             ),
             missing_before_placeholder_fill=len(missing_before_fill),
+            semantically_audited_rows=sum(result.semantically_audited_rows for result in results),
+            semantically_incomplete_rows=sum(result.semantically_incomplete_rows for result in results),
+            facts_recovered_by_audit=sum(result.facts_recovered_by_audit for result in results),
+            unsupported_audit_corrections=sum(result.unsupported_audit_corrections for result in results),
+            semantic_review_required=sum(result.semantic_review_required for result in results),
+            semantic_audit_tokens=sum(result.semantic_audit_tokens for result in results),
+            semantic_audit_time_ms=sum(result.semantic_audit_time_ms for result in results),
             agent_version=cfg.agent_version,
             container_tag=cfg.container_tag,
             prompt_version=cfg.prompt_version,

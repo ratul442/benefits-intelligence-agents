@@ -122,6 +122,13 @@ class TopicResult(BaseModel):
     parser_dropped_keys: list[str] = Field(default_factory=list)
     raw_output_keys: list[str] = Field(default_factory=list)
     structured_output_detected: bool = False
+    semantically_audited_rows: int = 0
+    semantically_incomplete_rows: int = 0
+    facts_recovered_by_audit: int = 0
+    unsupported_audit_corrections: int = 0
+    semantic_review_required: int = 0
+    semantic_audit_tokens: int = 0
+    semantic_audit_time_ms: int = 0
 
 
 class InvocationResponse(BaseModel):
@@ -179,6 +186,13 @@ class ReportMetadata(BaseModel):
     model_omitted_datapoints: int = 0
     parser_dropped_datapoints: int = 0
     missing_before_placeholder_fill: int = 0
+    semantically_audited_rows: int = 0
+    semantically_incomplete_rows: int = 0
+    facts_recovered_by_audit: int = 0
+    unsupported_audit_corrections: int = 0
+    semantic_review_required: int = 0
+    semantic_audit_tokens: int = 0
+    semantic_audit_time_ms: int = 0
     # Deployment traceability
     agent_version: str = ""
     container_tag: str = ""
