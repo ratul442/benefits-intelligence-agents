@@ -38,6 +38,17 @@ python test_local.py
 
 `test_local.py` exercises the pipeline locally with sample input. It is intended for validation before packaging the hosted agent.
 
+## Streaming and execution telemetry
+
+Full invocations return an SSE stream with these event types:
+
+- `status` confirms that processing started.
+- `batch_complete` includes timestamps, token counts, extraction/retry/audit durations, and row count for one bounded batch.
+- `row` publishes each audited batch row as soon as that batch completes. These events include `provisional: true` because deterministic alignment, parent-child rules, and final validation run after all batches finish.
+- `done` contains the authoritative final report and invocation metadata.
+
+Final metadata includes every batch profile, the observed concurrency timeline and peak, configured concurrency, phase timings, time to first provisional row, and streamed-row count. Cumulative parsing, validation, and audit timings may overlap and must not be interpreted as wall-clock duration; `processing_time_ms` and `phase_timings.llm_processing_wall_ms` provide wall-clock measurements.
+
 ## Deploy to Microsoft Foundry
 
 The agent is packaged as a Docker container and deployed as a **hosted Foundry

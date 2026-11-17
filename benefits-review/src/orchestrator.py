@@ -6,9 +6,15 @@ import asyncio
 import json
 import logging
 import time
+from collections.abc import Awaitable, Callable
+from datetime import datetime, timezone
+from typing import Any
 
 from src.config import settings
 from src.models import (
+    BatchTelemetry,
+    ConcurrencyEvent,
+        PhaseTimings,
     DatapointEntry,
     InvocationRequest,
     InvocationResponse,
@@ -61,6 +67,42 @@ _STRUCTURED_OUTPUT_SCHEMA = {
 }
 
 logger = logging.getLogger(__name__)
+
+PipelineEventCallback = Callable[[dict[str, Any]], Awaitable[None]]
+
+
+def _utc_timestamp() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _batch_telemetry(result: TopicResult) -> BatchTelemetry:
+    return BatchTelemetry(
+        topic=result.topic_name,
+        batch_index=result.batch_index,
+        batch_count=result.batch_count,
+        started_at=result.started_at,
+        ended_at=result.ended_at,
+        duration_ms=result.processing_time_ms,
+        input_tokens=result.input_tokens,
+        output_tokens=result.output_tokens,
+        total_tokens=result.token_usage,
+        extraction_time_ms=result.extraction_time_ms,
+        extraction_llm_time_ms=result.extraction_llm_time_ms,
+        retry_time_ms=result.retry_time_ms,
+        retry_llm_time_ms=result.retry_llm_time_ms,
+        audit_time_ms=result.semantic_audit_time_ms,
+        parsing_time_ms=result.parsing_time_ms,
+        validation_time_ms=result.validation_time_ms,
+        retry_count=1 if result.initially_missing_keys else 0,
+        extraction_input_tokens=result.extraction_input_tokens,
+        extraction_output_tokens=result.extraction_output_tokens,
+        retry_input_tokens=result.retry_input_tokens,
+        retry_output_tokens=result.retry_output_tokens,
+        audit_input_tokens=result.semantic_audit_input_tokens,
+        audit_output_tokens=result.semantic_audit_output_tokens,
+        rows_returned=len(result.rows),
+        error=result.error,
+    )
 
 
 def _is_reasoning_model(model: str) -> bool:
@@ -135,6 +177,7 @@ async def _process_single_topic(
 ) -> TopicResult:
     """Process one topic batch and retry any keys omitted by the model."""
     start = time.perf_counter()
+    started_at = _utc_timestamp()
     topic_name = topic_slice.topic_name
 
     initial_result = await _call_topic_batch(client, topic_slice, model, country)
@@ -159,6 +202,12 @@ async def _process_single_topic(
 
     retry_rows: list[ReportRow] = []
     retry_tokens = 0
+    retry_input_tokens = 0
+    retry_output_tokens = 0
+    retry_time_ms = 0
+    retry_llm_time_ms = 0
+    retry_parsing_time_ms = 0
+    retry_validation_time_ms = 0
     retry_error: str | None = None
     retry_parser_dropped_keys: list[str] = []
     if missing_datapoints:
@@ -173,6 +222,12 @@ async def _process_single_topic(
         retry_slice = topic_slice.model_copy(update={"datapoints": missing_datapoints})
         retry_result = await _call_topic_batch(client, retry_slice, model, country)
         retry_tokens = retry_result.token_usage
+        retry_input_tokens = retry_result.input_tokens
+        retry_output_tokens = retry_result.output_tokens
+        retry_time_ms = retry_result.processing_time_ms
+        retry_llm_time_ms = retry_result.extraction_llm_time_ms
+        retry_parsing_time_ms = retry_result.parsing_time_ms
+        retry_validation_time_ms = retry_result.validation_time_ms
         retry_error = retry_result.error
         retry_parser_dropped_keys = retry_result.parser_dropped_keys
         retry_key_set = set(initially_missing_keys)
@@ -214,6 +269,7 @@ async def _process_single_topic(
         if audit_result.error:
             logger.error("Semantic audit failed for %s: %s", topic_name, audit_result.error)
 
+    ended_at = _utc_timestamp()
     return TopicResult(
         topic_name=topic_name,
         rows=combined_rows,
@@ -222,7 +278,33 @@ async def _process_single_topic(
             + retry_tokens
             + (audit_result.token_usage if audit_result else 0)
         ),
+        input_tokens=(
+            initial_result.input_tokens
+            + retry_input_tokens
+            + (audit_result.input_tokens if audit_result else 0)
+        ),
+        output_tokens=(
+            initial_result.output_tokens
+            + retry_output_tokens
+            + (audit_result.output_tokens if audit_result else 0)
+        ),
         processing_time_ms=int((time.perf_counter() - start) * 1000),
+        extraction_time_ms=initial_result.processing_time_ms,
+        extraction_llm_time_ms=initial_result.extraction_llm_time_ms,
+        retry_time_ms=retry_time_ms,
+        retry_llm_time_ms=retry_llm_time_ms,
+        parsing_time_ms=initial_result.parsing_time_ms + retry_parsing_time_ms,
+        validation_time_ms=(
+            initial_result.validation_time_ms + retry_validation_time_ms
+        ),
+        extraction_input_tokens=initial_result.input_tokens,
+        extraction_output_tokens=initial_result.output_tokens,
+        retry_input_tokens=retry_input_tokens,
+        retry_output_tokens=retry_output_tokens,
+        started_at=started_at,
+        ended_at=ended_at,
+        batch_index=topic_slice.batch_index,
+        batch_count=topic_slice.batch_count,
         error=retry_error,
         initially_missing_keys=initially_missing_keys,
         recovered_keys=recovered_keys,
@@ -238,6 +320,8 @@ async def _process_single_topic(
         unsupported_audit_corrections=(audit_result.unsupported_corrections if audit_result else 0),
         semantic_review_required=audit_result.review_required if audit_result else 0,
         semantic_audit_tokens=audit_result.token_usage if audit_result else 0,
+        semantic_audit_input_tokens=(audit_result.input_tokens if audit_result else 0),
+        semantic_audit_output_tokens=(audit_result.output_tokens if audit_result else 0),
         semantic_audit_time_ms=audit_result.processing_time_ms if audit_result else 0,
     )
 
@@ -250,6 +334,7 @@ async def _call_topic_batch(
 ) -> TopicResult:
     """Call and parse one bounded topic batch without completeness retries."""
     start = time.perf_counter()
+    started_at = _utc_timestamp()
     topic_name = topic_slice.topic_name
 
     try:
@@ -267,6 +352,7 @@ async def _call_topic_batch(
 
         model_parameters = _model_request_parameters(model)
 
+        llm_started = time.perf_counter()
         response = await client.responses.create(
             model=model,
             instructions=system_msg,
@@ -276,11 +362,19 @@ async def _call_topic_batch(
             store=True,  # Enable response storage for traceability
             **model_parameters,
         )
+        llm_time_ms = int((time.perf_counter() - llm_started) * 1000)
 
         raw_output = response.output_text or ""
         token_usage = (response.usage.total_tokens if response.usage else 0)
+        input_tokens = (
+            getattr(response.usage, "input_tokens", 0) if response.usage else 0
+        )
+        output_tokens = (
+            getattr(response.usage, "output_tokens", 0) if response.usage else 0
+        )
 
         # Parse rows from structured JSON output
+        parsing_started = time.perf_counter()
         structured_output_detected, raw_output_keys = _structured_output_keys(raw_output)
         rows = _parse_structured_output(raw_output)
         parsed_keys = {row.comparison_key for row in rows}
@@ -294,8 +388,10 @@ async def _call_topic_batch(
                 topic_slice.batch_count,
                 parser_dropped_keys,
             )
+        parsing_time_ms = int((time.perf_counter() - parsing_started) * 1000)
 
         # Validate
+        validation_started = time.perf_counter()
         validation = validate_rows(rows, topic_slice.datapoints)
         if validation.errors:
             logger.warning(
@@ -305,13 +401,24 @@ async def _call_topic_batch(
             logger.info(
                 "Validation warnings for topic %s: %s", topic_name, validation.warnings
             )
+        validation_time_ms = int((time.perf_counter() - validation_started) * 1000)
 
         elapsed_ms = int((time.perf_counter() - start) * 1000)
         return TopicResult(
             topic_name=topic_name,
             rows=rows,
             token_usage=token_usage,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             processing_time_ms=elapsed_ms,
+            extraction_time_ms=elapsed_ms,
+            extraction_llm_time_ms=llm_time_ms,
+            parsing_time_ms=parsing_time_ms,
+            validation_time_ms=validation_time_ms,
+            started_at=started_at,
+            ended_at=_utc_timestamp(),
+            batch_index=topic_slice.batch_index,
+            batch_count=topic_slice.batch_count,
             parser_dropped_keys=parser_dropped_keys,
             raw_output_keys=sorted(raw_output_keys),
             structured_output_detected=structured_output_detected,
@@ -323,6 +430,11 @@ async def _call_topic_batch(
         return TopicResult(
             topic_name=topic_name,
             processing_time_ms=elapsed_ms,
+            extraction_time_ms=elapsed_ms,
+            started_at=started_at,
+            ended_at=_utc_timestamp(),
+            batch_index=topic_slice.batch_index,
+            batch_count=topic_slice.batch_count,
             error=str(exc),
         )
 
@@ -331,6 +443,7 @@ async def run_benefits_review(
     request: InvocationRequest,
     client,
     model: str | None = None,
+    event_callback: PipelineEventCallback | None = None,
 ) -> InvocationResponse:
     """Execute the full Benefits Review pipeline.
 
@@ -343,11 +456,13 @@ async def run_benefits_review(
     model_name = model or settings.azure_ai_model_deployment_name
 
     # Step 1: Slice
+    slicing_started = time.perf_counter()
     slices = slice_payloads(
         company_md=request.company_payload,
         market_md=request.market_payload,
         catalog=request.datapoints_catalog,
     )
+    slicing_ms = int((time.perf_counter() - slicing_started) * 1000)
 
     if not slices:
         return InvocationResponse(
@@ -358,13 +473,62 @@ async def run_benefits_review(
 
     # Step 2: Process all bounded topic batches in parallel.
     semaphore = asyncio.Semaphore(settings.max_concurrent_topics)
+    concurrency_lock = asyncio.Lock()
+    active_batches = 0
+    peak_concurrency = 0
+    concurrency_timeline: list[ConcurrencyEvent] = []
+    time_to_first_row_ms: int | None = None
+    streamed_rows = 0
+
+    async def record_concurrency(
+        event: str, topic_slice: TopicSlice, active: int
+    ) -> None:
+        concurrency_timeline.append(ConcurrencyEvent(
+            timestamp=_utc_timestamp(),
+            elapsed_ms=int((time.perf_counter() - start) * 1000),
+            event=event,
+            topic=topic_slice.topic_name,
+            batch_index=topic_slice.batch_index,
+            active_batches=active,
+        ))
 
     async def process_bounded(topic_slice: TopicSlice) -> TopicResult:
+        nonlocal active_batches, peak_concurrency, time_to_first_row_ms, streamed_rows
+        await record_concurrency("queued", topic_slice, active_batches)
         async with semaphore:
-            return await _process_single_topic(
-                client, topic_slice, model_name, request.country
-            )
+            async with concurrency_lock:
+                active_batches += 1
+                peak_concurrency = max(peak_concurrency, active_batches)
+                await record_concurrency("started", topic_slice, active_batches)
+            try:
+                result = await _process_single_topic(
+                    client, topic_slice, model_name, request.country
+                )
+            finally:
+                async with concurrency_lock:
+                    active_batches -= 1
+                    await record_concurrency("finished", topic_slice, active_batches)
 
+        if result.rows and time_to_first_row_ms is None:
+            time_to_first_row_ms = int((time.perf_counter() - start) * 1000)
+        streamed_rows += len(result.rows)
+        if event_callback is not None:
+            telemetry = _batch_telemetry(result)
+            await event_callback({
+                "type": "batch_complete",
+                "telemetry": telemetry.model_dump(mode="json"),
+            })
+            for row in result.rows:
+                await event_callback({
+                    "type": "row",
+                    "provisional": True,
+                    "topic": result.topic_name,
+                    "batch_index": result.batch_index,
+                    "row": row.model_dump(mode="json"),
+                })
+        return result
+
+    llm_started = time.perf_counter()
     tasks = [process_bounded(topic_slice) for topic_slice in slices]
     results: list[TopicResult] = await asyncio.gather(*tasks)
 
@@ -384,8 +548,10 @@ async def run_benefits_review(
         retry_results = await asyncio.gather(*retry_tasks)
         for idx, result in zip(failed_indices, retry_results):
             results[idx] = result
+    llm_processing_wall_ms = int((time.perf_counter() - llm_started) * 1000)
 
     # Step 3: Aggregate
+    aggregation_started = time.perf_counter()
     all_rows: list[ReportRow] = []
     total_tokens = 0
     per_topic_timing: dict[str, int] = {}
@@ -414,20 +580,28 @@ async def run_benefits_review(
             len(missing_before_fill),
             missing_before_fill,
         )
+    aggregation_ms = int((time.perf_counter() - aggregation_started) * 1000)
 
     # Step 5: Deterministic alignment override (uses catalog alignment.basis)
+    alignment_started = time.perf_counter()
     all_rows = apply_deterministic_alignment(all_rows, request.datapoints_catalog)
 
     # Step 6: Enforce parent-child N/A from catalog dependencies
     all_rows = enforce_parent_child_na(all_rows, request.datapoints_catalog)
+    alignment_ms = int((time.perf_counter() - alignment_started) * 1000)
 
     # Step 7: Fill missing rows so all catalog entries are represented
+    final_validation_started = time.perf_counter()
     all_rows = fill_missing_rows(all_rows, request.datapoints_catalog)
 
     # Step 8: Validate output format rules (line breaks, plan name leakage)
     all_rows = validate_output_format(all_rows, request.datapoints_catalog)
+    final_validation_ms = int(
+        (time.perf_counter() - final_validation_started) * 1000
+    )
 
     # Preserve the authoritative catalog's one-to-one source order.
+    final_aggregation_started = time.perf_counter()
     catalog_order = {
         datapoint.comparison_key: index
         for index, datapoint in enumerate(request.datapoints_catalog)
@@ -437,7 +611,6 @@ async def run_benefits_review(
     )
 
     total, completed, na = count_valid_rows(all_rows)
-    elapsed_ms = int((time.perf_counter() - start) * 1000)
 
     # Compute enhanced validation summary
     from collections import Counter
@@ -468,6 +641,10 @@ async def run_benefits_review(
     catalog_version = getattr(cfg, "catalog_version", "")
 
     status = "completed" if not errors else "partial"
+    final_aggregation_ms = int(
+        (time.perf_counter() - final_aggregation_started) * 1000
+    )
+    elapsed_ms = int((time.perf_counter() - start) * 1000)
 
     return InvocationResponse(
         request_id=request.request_id,
@@ -514,6 +691,27 @@ async def run_benefits_review(
             semantic_review_required=sum(result.semantic_review_required for result in results),
             semantic_audit_tokens=sum(result.semantic_audit_tokens for result in results),
             semantic_audit_time_ms=sum(result.semantic_audit_time_ms for result in results),
+            batch_telemetry=[_batch_telemetry(result) for result in results],
+            concurrency_timeline=concurrency_timeline,
+            peak_concurrency=peak_concurrency,
+            configured_max_concurrency=settings.max_concurrent_topics,
+            phase_timings=PhaseTimings(
+                slicing_ms=slicing_ms,
+                llm_processing_wall_ms=llm_processing_wall_ms,
+                parsing_cumulative_ms=sum(result.parsing_time_ms for result in results),
+                batch_validation_cumulative_ms=sum(
+                    result.validation_time_ms for result in results
+                ),
+                semantic_audit_cumulative_ms=sum(
+                    result.semantic_audit_time_ms for result in results
+                ),
+                aggregation_ms=aggregation_ms,
+                alignment_ms=alignment_ms,
+                final_validation_ms=final_validation_ms,
+                final_aggregation_ms=final_aggregation_ms,
+            ),
+            time_to_first_row_ms=time_to_first_row_ms,
+            streamed_rows=streamed_rows,
             agent_version=cfg.agent_version,
             container_tag=cfg.container_tag,
             prompt_version=cfg.prompt_version,

@@ -114,7 +114,23 @@ class TopicResult(BaseModel):
     topic_name: str
     rows: list[ReportRow] = Field(default_factory=list)
     token_usage: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
     processing_time_ms: int = 0
+    extraction_time_ms: int = 0
+    extraction_llm_time_ms: int = 0
+    retry_time_ms: int = 0
+    retry_llm_time_ms: int = 0
+    parsing_time_ms: int = 0
+    validation_time_ms: int = 0
+    extraction_input_tokens: int = 0
+    extraction_output_tokens: int = 0
+    retry_input_tokens: int = 0
+    retry_output_tokens: int = 0
+    started_at: str = ""
+    ended_at: str = ""
+    batch_index: int = 1
+    batch_count: int = 1
     error: str | None = None
     initially_missing_keys: list[str] = Field(default_factory=list)
     recovered_keys: list[str] = Field(default_factory=list)
@@ -128,7 +144,64 @@ class TopicResult(BaseModel):
     unsupported_audit_corrections: int = 0
     semantic_review_required: int = 0
     semantic_audit_tokens: int = 0
+    semantic_audit_input_tokens: int = 0
+    semantic_audit_output_tokens: int = 0
     semantic_audit_time_ms: int = 0
+
+
+class BatchTelemetry(BaseModel):
+    """Execution profile for one bounded extraction batch."""
+
+    topic: str
+    batch_index: int
+    batch_count: int
+    started_at: str
+    ended_at: str
+    duration_ms: int
+    input_tokens: int = 0
+    output_tokens: int = 0
+    total_tokens: int = 0
+    extraction_time_ms: int = 0
+    extraction_llm_time_ms: int = 0
+    retry_time_ms: int = 0
+    retry_llm_time_ms: int = 0
+    audit_time_ms: int = 0
+    parsing_time_ms: int = 0
+    validation_time_ms: int = 0
+    retry_count: int = 0
+    extraction_input_tokens: int = 0
+    extraction_output_tokens: int = 0
+    retry_input_tokens: int = 0
+    retry_output_tokens: int = 0
+    audit_input_tokens: int = 0
+    audit_output_tokens: int = 0
+    rows_returned: int = 0
+    error: str | None = None
+
+
+class ConcurrencyEvent(BaseModel):
+    """Observed semaphore activity during an invocation."""
+
+    timestamp: str
+    elapsed_ms: int
+    event: str
+    topic: str
+    batch_index: int
+    active_batches: int
+
+
+class PhaseTimings(BaseModel):
+    """Wall and cumulative timing for pipeline phases."""
+
+    slicing_ms: int = 0
+    llm_processing_wall_ms: int = 0
+    parsing_cumulative_ms: int = 0
+    batch_validation_cumulative_ms: int = 0
+    semantic_audit_cumulative_ms: int = 0
+    aggregation_ms: int = 0
+    alignment_ms: int = 0
+    final_validation_ms: int = 0
+    final_aggregation_ms: int = 0
 
 
 class InvocationResponse(BaseModel):
@@ -193,6 +266,13 @@ class ReportMetadata(BaseModel):
     semantic_review_required: int = 0
     semantic_audit_tokens: int = 0
     semantic_audit_time_ms: int = 0
+    batch_telemetry: list[BatchTelemetry] = Field(default_factory=list)
+    concurrency_timeline: list[ConcurrencyEvent] = Field(default_factory=list)
+    peak_concurrency: int = 0
+    configured_max_concurrency: int = 0
+    phase_timings: PhaseTimings = Field(default_factory=PhaseTimings)
+    time_to_first_row_ms: int | None = None
+    streamed_rows: int = 0
     # Deployment traceability
     agent_version: str = ""
     container_tag: str = ""

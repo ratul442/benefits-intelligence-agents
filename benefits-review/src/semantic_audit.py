@@ -91,6 +91,8 @@ For every changed Company or Market value, provide one or more exact verbatim ev
 class SemanticAuditResult:
     rows: list[ReportRow]
     token_usage: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
     processing_time_ms: int = 0
     audited_rows: int = 0
     incomplete_rows: int = 0
@@ -237,6 +239,12 @@ async def audit_topic_rows(
             topic_slice.market_slice,
         )
         result.token_usage = response.usage.total_tokens if response.usage else 0
+        result.input_tokens = (
+            getattr(response.usage, "input_tokens", 0) if response.usage else 0
+        )
+        result.output_tokens = (
+            getattr(response.usage, "output_tokens", 0) if response.usage else 0
+        )
         result.processing_time_ms = int((time.perf_counter() - started) * 1000)
         return result
     except Exception as exc:

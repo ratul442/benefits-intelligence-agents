@@ -15,6 +15,7 @@ Required environment variables:
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
@@ -246,10 +247,30 @@ async def handle_invoke(request: Request):
     async def event_generator():
         try:
             yield f"data: {json.dumps({'type': 'status', 'message': 'Starting benefits review...', 'request_id': invocation_req.request_id})}\n\n"
-            response = await run_benefits_review(invocation_req, _openai_client, _model)
-            if response.metadata:
-                for topic, ms in response.metadata.per_topic_timing.items():
-                    yield f"data: {json.dumps({'type': 'topic_complete', 'topic': topic, 'time_ms': ms})}\n\n"
+            event_queue: asyncio.Queue[dict | None] = asyncio.Queue()
+
+            async def publish_event(event: dict) -> None:
+                await event_queue.put(event)
+
+            async def execute_pipeline():
+                try:
+                    return await run_benefits_review(
+                        invocation_req,
+                        _openai_client,
+                        _model,
+                        event_callback=publish_event,
+                    )
+                finally:
+                    await event_queue.put(None)
+
+            pipeline_task = asyncio.create_task(execute_pipeline())
+            while True:
+                event = await event_queue.get()
+                if event is None:
+                    break
+                yield f"data: {json.dumps(event)}\n\n"
+
+            response = await pipeline_task
             result_json = response.model_dump(mode="json")
             yield f"data: {json.dumps({'type': 'done', 'result': result_json})}\n\n"
         except Exception as stream_exc:
